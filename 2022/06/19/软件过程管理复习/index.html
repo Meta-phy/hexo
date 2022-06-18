@@ -1,0 +1,462 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 6.2.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css" integrity="sha256-DfWjNxDkM94fVBWx1H5BMMp0Zq7luBlV8QRcSES7s+0=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"metaphy.top","root":"/","images":"/images","scheme":"Muse","darkmode":false,"version":"8.12.1","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":false,"style":null},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="SCNU2022年《软件过程管理》课程复习笔记 内容来自课本与砺儒云ppt，部分答案经过整理，有删改">
+<meta property="og:type" content="article">
+<meta property="og:title" content="软件过程管理复习笔记">
+<meta property="og:url" content="http://metaphy.top/2022/06/19/%E8%BD%AF%E4%BB%B6%E8%BF%87%E7%A8%8B%E7%AE%A1%E7%90%86%E5%A4%8D%E4%B9%A0/index.html">
+<meta property="og:site_name" content="Metaphy&#39;s Blog">
+<meta property="og:description" content="SCNU2022年《软件过程管理》课程复习笔记 内容来自课本与砺儒云ppt，部分答案经过整理，有删改">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://image-1301942411.cos.ap-guangzhou.myqcloud.com/PSP-TSP-CMM%E4%B9%8B%E9%97%B4%E7%9A%84%E5%85%B3%E7%B3%BB.png">
+<meta property="og:image" content="https://image-1301942411.cos.ap-guangzhou.myqcloud.com/%E5%9F%BA%E4%BA%8E%E7%BB%84%E7%BB%87%E7%9B%AE%E6%A0%87%E7%9A%84PSP-TSP-CMM%E4%B8%89%E8%80%85%E5%85%B3%E7%B3%BB.png">
+<meta property="og:image" content="https://image-1301942411.cos.ap-guangzhou.myqcloud.com/CMM-CMMI%E6%88%90%E7%86%9F%E5%BA%A6%E7%9A%845%E4%B8%AA%E7%AD%89%E7%BA%A7.png">
+<meta property="article:published_time" content="2022-06-18T17:02:34.000Z">
+<meta property="article:modified_time" content="2022-06-18T17:10:04.374Z">
+<meta property="article:author" content="Metaphy">
+<meta property="article:tag" content="软件过程管理">
+<meta property="article:tag" content="软件过程成熟度">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://image-1301942411.cos.ap-guangzhou.myqcloud.com/PSP-TSP-CMM%E4%B9%8B%E9%97%B4%E7%9A%84%E5%85%B3%E7%B3%BB.png">
+
+
+<link rel="canonical" href="http://metaphy.top/2022/06/19/%E8%BD%AF%E4%BB%B6%E8%BF%87%E7%A8%8B%E7%AE%A1%E7%90%86%E5%A4%8D%E4%B9%A0/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"http://metaphy.top/2022/06/19/%E8%BD%AF%E4%BB%B6%E8%BF%87%E7%A8%8B%E7%AE%A1%E7%90%86%E5%A4%8D%E4%B9%A0/","path":"2022/06/19/软件过程管理复习/","title":"软件过程管理复习笔记"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>软件过程管理复习笔记 | Metaphy's Blog</title>
+  
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">Metaphy's Blog</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+
+
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%90%8D%E8%AF%8D%E8%A7%A3%E9%87%8A"><span class="nav-number">1.</span> <span class="nav-text">名词解释</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E9%9B%86%E6%88%90%E9%A1%B9%E7%9B%AE%E7%AE%A1%E7%90%86"><span class="nav-number">1.1.</span> <span class="nav-text">集成项目管理</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E9%9C%80%E6%B1%82"><span class="nav-number">1.2.</span> <span class="nav-text">需求</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E8%BD%AF%E4%BB%B6%E8%BF%87%E7%A8%8B%E7%AE%A1%E7%90%86"><span class="nav-number">1.3.</span> <span class="nav-text">软件过程管理</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E9%AA%8C%E8%AF%81"><span class="nav-number">1.4.</span> <span class="nav-text">验证</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E8%BD%AF%E4%BB%B6%E6%88%90%E7%86%9F%E5%BA%A6"><span class="nav-number">1.5.</span> <span class="nav-text">软件成熟度</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%BB%A3%E7%A0%81%E9%87%8D%E6%9E%84"><span class="nav-number">1.6.</span> <span class="nav-text">代码重构</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E8%B4%A8%E9%87%8F%E7%AE%A1%E7%90%86"><span class="nav-number">1.7.</span> <span class="nav-text">质量管理</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E9%A1%B9%E7%9B%AE%E7%AE%A1%E7%90%86"><span class="nav-number">1.8.</span> <span class="nav-text">项目管理</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E8%BF%87%E7%A8%8B%E8%A7%84%E8%8C%83"><span class="nav-number">1.9.</span> <span class="nav-text">过程规范</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%9F%BA%E7%BA%BF"><span class="nav-number">1.10.</span> <span class="nav-text">基线</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%AE%80%E7%AD%94%E9%A2%98"><span class="nav-number">2.</span> <span class="nav-text">简答题</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%AE%80%E8%A6%81%E8%AE%BA%E8%BF%B0%E9%A1%B9%E7%9B%AE%E6%88%90%E6%9C%AC%E7%9A%84%E7%BB%84%E6%88%90%E5%8F%8A%E4%BC%B0%E7%AE%97%E6%96%B9%E6%B3%95"><span class="nav-number">2.1.</span> <span class="nav-text">简要论述项目成本的组成及估算方法</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#%E6%88%90%E6%9C%AC%E7%BB%84%E6%88%90"><span class="nav-number">2.1.1.</span> <span class="nav-text">成本组成</span></a><ol class="nav-child"><li class="nav-item nav-level-6"><a class="nav-link" href="#%E7%9B%B4%E6%8E%A5%E6%88%90%E6%9C%AC"><span class="nav-number">2.1.1.1.</span> <span class="nav-text">直接成本</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#%E9%97%B4%E6%8E%A5%E6%88%90%E6%9C%AC"><span class="nav-number">2.1.1.2.</span> <span class="nav-text">间接成本</span></a></li></ol></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E4%BC%B0%E7%AE%97%E6%96%B9%E6%B3%95"><span class="nav-number">2.1.2.</span> <span class="nav-text">估算方法</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E8%AF%95%E8%AE%BA%E8%BF%B0-%E7%9F%A5%E8%AF%86%E4%BC%A0%E9%80%92-1-%E7%9A%84%E5%88%86%E7%B1%BB%E5%8F%8A%E6%9C%89%E6%95%88%E6%96%B9%E6%B3%95"><span class="nav-number">2.2.</span> <span class="nav-text">试论述**知识传递^1**的分类及有效方法</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#%E5%88%86%E7%B1%BB"><span class="nav-number">2.2.1.</span> <span class="nav-text">分类</span></a><ol class="nav-child"><li class="nav-item nav-level-6"><a class="nav-link" href="#%E7%BA%B5%E5%90%91%E4%BC%A0%E9%80%92"><span class="nav-number">2.2.1.1.</span> <span class="nav-text">纵向传递</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#%E6%A8%AA%E5%90%91%E4%BC%A0%E9%80%92"><span class="nav-number">2.2.1.2.</span> <span class="nav-text">横向传递</span></a></li></ol></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E6%9C%89%E6%95%88%E6%96%B9%E6%B3%95"><span class="nav-number">2.2.2.</span> <span class="nav-text">有效方法</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E8%AE%BA%E8%BF%B0PSP-TSP-CMM%E4%B8%89%E8%80%85%E7%9A%84%E7%9B%B8%E4%BA%92%E5%85%B3%E7%B3%BB%E9%80%82%E7%94%A8%E8%8C%83%E5%9B%B4"><span class="nav-number">2.3.</span> <span class="nav-text">论述PSP,TSP,CMM三者的相互关系适用范围</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#CMM-p53-CMMI%E4%BD%93%E7%B3%BB%E4%B8%AD%E5%90%84%E4%B8%AA%E6%88%90%E7%86%9F%E5%BA%A6%E7%BA%A7%E5%88%AB"><span class="nav-number">2.4.</span> <span class="nav-text">CMM(p53),CMMI体系中各个成熟度级别</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E8%BD%AF%E4%BB%B6%E8%BF%87%E7%A8%8B%E8%AF%84%E4%BC%B0%E7%9A%84%E7%B1%BB%E5%9E%8B"><span class="nav-number">2.5.</span> <span class="nav-text">软件过程评估的类型</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E8%B4%A8%E9%87%8F%E8%AE%A1%E5%88%92%E7%9A%84%E5%88%B6%E8%AE%A2%E6%AD%A5%E9%AA%A4"><span class="nav-number">2.6.</span> <span class="nav-text">质量计划的制订步骤</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%AE%BA%E8%BF%B0%E9%A2%98"><span class="nav-number">3.</span> <span class="nav-text">论述题</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E8%BD%AF%E4%BB%B6%E8%BF%87%E7%A8%8B%E7%AE%A1%E7%90%86%E7%9A%84%E4%BD%9C%E7%94%A8"><span class="nav-number">3.1.</span> <span class="nav-text">软件过程管理的作用</span></a></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">Metaphy</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">5</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">3</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">5</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+        </div>
+      </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://metaphy.top/2022/06/19/%E8%BD%AF%E4%BB%B6%E8%BF%87%E7%A8%8B%E7%AE%A1%E7%90%86%E5%A4%8D%E4%B9%A0/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Metaphy">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Metaphy's Blog">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="软件过程管理复习笔记 | Metaphy's Blog">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          软件过程管理复习笔记
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+      
+
+      <time title="创建时间：2022-06-19 01:02:34 / 修改时间：01:10:04" itemprop="dateCreated datePublished" datetime="2022-06-19T01:02:34+08:00">2022-06-19</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/SCNU%E7%AC%94%E8%AE%B0/" itemprop="url" rel="index"><span itemprop="name">SCNU笔记</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <p><strong>SCNU</strong>2022年《软件过程管理》课程复习笔记</p>
+<p>内容来自课本与砺儒云ppt，部分答案经过整理，有删改</p>
+<span id="more"></span>
+
+<h3 id="名词解释"><a href="#名词解释" class="headerlink" title="名词解释"></a>名词解释</h3><h4 id="集成项目管理"><a href="#集成项目管理" class="headerlink" title="集成项目管理"></a>集成项目管理</h4><p>  是对已定义的组织标准软件过程进行剪裁以符合项目的特性，吸收相关软件过程财富，制定集成的项目自定义过程来管理多个项目，并且满足相关利益者的要求,到达平衡。</p>
+<h4 id="需求"><a href="#需求" class="headerlink" title="需求"></a>需求</h4><p>  用户解决问题或达到目标所需要的条件或能力，系统或系统部件要满足合同标准，规范或其他正式规定文档所需要具有的条件或能力，反映上述条件或能力的文档说明</p>
+<h4 id="软件过程管理"><a href="#软件过程管理" class="headerlink" title="软件过程管理"></a>软件过程管理</h4><p>  软件过程管理是为快速开发高质量软件、有效地维护软件运行等各类活动提供的指导性框架、实施方法和最佳实践。</p>
+<h4 id="验证"><a href="#验证" class="headerlink" title="验证"></a>验证</h4><p>  验证或检验软件是否已正确地实现了产品规格书所定义的系统功能和特性，验证过程提供证据表明，软件相关产品与所有生命周期活动的要求相一致</p>
+<h4 id="软件成熟度"><a href="#软件成熟度" class="headerlink" title="软件成熟度"></a>软件成熟度</h4><p>  【软件过程成熟度】指对具体软件过程行明确定义、管理、度量和控制的有效程度</p>
+<h4 id="代码重构"><a href="#代码重构" class="headerlink" title="代码重构"></a>代码重构</h4><p>  码重构是指在不改变代码外在行为的前提下通过对代码进行整体的修改，以改进代码的内部结构和优化算法等，使程序整体性能改善、复用性更高以及理解性和可维护性更强等,而且保证了在对原有的软件扩充、提高了软件本身的质量。</p>
+<h4 id="质量管理"><a href="#质量管理" class="headerlink" title="质量管理"></a>质量管理</h4><p>  质量管理是指全部管理职能的一个方面，该管理职能负责质量方针的制定与实施</p>
+<p>  【补充】质量管理是指确定质量方针，目标和职责，并通过质量体系中的质量策划，质量控制，质量保证和质量改进来使其实现的所有管理职能的全部活动</p>
+<h4 id="项目管理"><a href="#项目管理" class="headerlink" title="项目管理"></a>项目管理</h4><p>  项目管理是指把各种系统、方法和人员结合在一起，在规定的时间、预算和质量目标范围内完成项目的各项工作</p>
+<h4 id="过程规范"><a href="#过程规范" class="headerlink" title="过程规范"></a>过程规范</h4><p>  过程规范就是对输入&#x2F;输出和活动所构成的过程进行明文规定或约定俗成的标准。</p>
+<p>  【补充】是软件开发组织行动的准则与指南</p>
+<h4 id="基线"><a href="#基线" class="headerlink" title="基线"></a>基线</h4><p>  经过正式评审和认可的一组软件配置项，此后他们将作为下一步开发工作的基础，而且只有通过正式的变更控制流程才能被更改</p>
+<p>  【补充】软件生命期各阶段末尾的特定点，也被称为里程碑</p>
+<h3 id="简答题"><a href="#简答题" class="headerlink" title="简答题"></a>简答题</h3><h4 id="简要论述项目成本的组成及估算方法"><a href="#简要论述项目成本的组成及估算方法" class="headerlink" title="简要论述项目成本的组成及估算方法"></a>简要论述<strong>项目成本</strong>的组成及估算方法</h4><h5 id="成本组成"><a href="#成本组成" class="headerlink" title="成本组成"></a>成本组成</h5><h6 id="直接成本"><a href="#直接成本" class="headerlink" title="直接成本"></a>直接成本</h6><p>  可以追溯到个别产品、服务或部门的成本。包括人工、硬件设备和软件等费用。</p>
+<h6 id="间接成本"><a href="#间接成本" class="headerlink" title="间接成本"></a>间接成本</h6><p>  几项服务或几个部门共同引起的成本。又分为：</p>
+<ul>
+<li>项目管理成本。例如咨询、项目培训和出差费用</li>
+<li>一般管理成本（固定成本）。包括高层管理人员的费用，行政费用。</li>
+</ul>
+<h5 id="估算方法"><a href="#估算方法" class="headerlink" title="估算方法"></a>估算方法</h5><ol>
+<li><p>经验估算法</p>
+<p>由有专门知识和丰富经验的人提出一个近似的猜测。</p>
+</li>
+<li><p>比例法</p>
+<p>以过去项目为参考来预算目前项目的成本。</p>
+</li>
+<li><p>工作分解结构表WBS全面估算</p>
+<p>把项目任务进行合理的细分（如某种材料、某种设备和某一活动单元），然后自上而下或自下而上</p>
+</li>
+</ol>
+<h4 id="试论述-知识传递-1-的分类及有效方法"><a href="#试论述-知识传递-1-的分类及有效方法" class="headerlink" title="试论述**知识传递^1**的分类及有效方法"></a>试论述**知识传递<a href="%E7%9F%A5%E8%AF%86%E4%BC%A0%E9%80%92%EF%BC%8C%E6%98%AF%E6%8C%87%E4%BB%A5%E4%BA%A4%E6%B5%81%E5%92%8C%E7%BB%A7%E6%89%BF%E8%AE%A4%E8%AF%86%E6%88%90%E6%9E%9C%EF%BC%8C%E5%8F%96%E5%BE%97%E9%97%B4%E6%8E%A5%E7%BB%8F%E9%AA%8C%E7%9A%84%E4%B8%80%E7%A7%8D%E6%95%99%E8%82%B2%E5%BD%A2%E5%BC%8F%E3%80%82">^1</a>**的分类及有效方法</h4><h5 id="分类"><a href="#分类" class="headerlink" title="分类"></a>分类</h5><h6 id="纵向传递"><a href="#纵向传递" class="headerlink" title="纵向传递"></a>纵向传递</h6><p>  软件产品和技术知识从需求分析阶段到设计阶段、从设计到编程、从开发到维护以及从上一个版本到当前版本的知识传递过程。<strong>时间顺序性的</strong></p>
+<h6 id="横向传递"><a href="#横向传递" class="headerlink" title="横向传递"></a>横向传递</h6><p>  软件产品和技术知识在不同团队间的传递过程，不同工种的团队之间、不同产品线的开团队之间、不同知识领域以及新老员工之间。<strong>实时性的</strong></p>
+<h5 id="有效方法"><a href="#有效方法" class="headerlink" title="有效方法"></a>有效方法</h5><p>  团队文化的建设，员工的教育和培训</p>
+<ol>
+<li>创造愉快活跃的团队关系</li>
+<li>对团队适时、定期的培训</li>
+<li>对新员工进行足够的培训</li>
+</ol>
+<p>  需求文档、产品规格说明书、设计的技术文档、测试计划和用例等的评审、复审，起着一箭双雕的作用,既是质量保证的一种措施，也也是一种知识传递的方式。<br>  使用统一的语言(如UML)来描述领域知识、设计模型和程序实现等，使大家对同样的一个问题有着同样的认识，减少知识传递的难度和成本。<br>  建立良好的反馈机制、文档管理系统、知识库(knowledgebase)和论坛等，都会有助于知识的共享和传递。</p>
+<h4 id="论述PSP-TSP-CMM三者的相互关系适用范围"><a href="#论述PSP-TSP-CMM三者的相互关系适用范围" class="headerlink" title="论述PSP,TSP,CMM三者的相互关系适用范围"></a>论述PSP,TSP,CMM三者的相互关系适用范围</h4><blockquote>
+<p>PSP（Personal Software Process）：个体软件过程</p>
+<p>TSP（Team Software Process）：团队软件过程</p>
+<p>CMM（Capacity Maturity Model）：能力成熟度模型</p>
+</blockquote>
+<p>  PSP是改善软件个人的过程能力，TSP是改善软件团队的过程能力，而CMM则集中在软件组织过程能力成熟度的指导上。</p>
+<p><img src="https://image-1301942411.cos.ap-guangzhou.myqcloud.com/PSP-TSP-CMM%E4%B9%8B%E9%97%B4%E7%9A%84%E5%85%B3%E7%B3%BB.png"></p>
+<p>  CMM是过程改善的第一步，提供了评价组织的能力、识别优先改善需求和追踪改善进展的管理方式。</p>
+<p>  PSP能够知道软件工程师如何保证自己的工作质量，管理自身的软件过程和产品质量。</p>
+<p>  TSP结合了CMM的管理方法和PSP的工程技能，通过将个人与组织&#x2F;管理系统相联系，通过告诉管理层如何支持和授权项目小组，坚持高质量的工作，向组织展示如何应用CMM原则和PSP技能去生产高质量的产品</p>
+<p><img src="https://image-1301942411.cos.ap-guangzhou.myqcloud.com/%E5%9F%BA%E4%BA%8E%E7%BB%84%E7%BB%87%E7%9B%AE%E6%A0%87%E7%9A%84PSP-TSP-CMM%E4%B8%89%E8%80%85%E5%85%B3%E7%B3%BB.png"></p>
+<h4 id="CMM-p53-CMMI体系中各个成熟度级别"><a href="#CMM-p53-CMMI体系中各个成熟度级别" class="headerlink" title="CMM(p53),CMMI体系中各个成熟度级别"></a>CMM(p53),CMMI体系中各个成熟度级别</h4><table>
+<thead>
+<tr>
+<th>CMM</th>
+<th>CMMI</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>初始级</td>
+<td>初始级</td>
+<td>组织的过程能力是不可视和不可预测的，缺乏开发和维护软所需的稳定环境<br />过程缺乏定义，其过程是无秩序的，有时甚至是混乱的</td>
+</tr>
+<tr>
+<td>可重复级</td>
+<td>受管理级</td>
+<td>建立了管理软件项目的方针和实施这些方针的规程，使软件项目的有效管理过程制度化，有能力去跟踪成本、进度和质量。一个有效过程可特征化为已文档化的、已实施的、可培训的和可测量的软件过程</td>
+</tr>
+<tr>
+<td>已定义级</td>
+<td>已定义级</td>
+<td>包含一组协调的、集成的、适度定义的软件工程过程和管理过程，具有良好的文档化、标准化，使软件过程具有可视性、一致性、稳定性和可重复性，软件过程被集成为一个有机的整体</td>
+</tr>
+<tr>
+<td>定量管理级</td>
+<td>已管理级</td>
+<td>软件过程是量化的管理过程。在上述已定义级的基础上，可以建立有关软件过程和产品质量的、一致的度量体系，采集详细的数据进行分析，从而对软件产品和过程进行有效的定量控制和管理。</td>
+</tr>
+<tr>
+<td>优化级</td>
+<td>持续优化级</td>
+<td>不断改善组织的软件过程能力和项目的过程性能，利用来自过程和来自新思想、新技术的先导性试验的定量反馈信息，使持续过程改进成为可能。为了预防缺陷出现，组织有办法识别出弱点并预先针对性地加强过程</td>
+</tr>
+</tbody></table>
+<p><img src="https://image-1301942411.cos.ap-guangzhou.myqcloud.com/CMM-CMMI%E6%88%90%E7%86%9F%E5%BA%A6%E7%9A%845%E4%B8%AA%E7%AD%89%E7%BA%A7.png"></p>
+<h4 id="软件过程评估的类型"><a href="#软件过程评估的类型" class="headerlink" title="软件过程评估的类型"></a>软件过程评估的类型</h4><p>  A类评估。全面综合的评估方法，要求全面覆盖评估中所使用的模型。<br>  B类评估。评估范围缩小，集中于需要关注的过程域。<br>  C类评估。也称为快估。主要是检查特定的风险域，找出过程中的问题所在。</p>
+<table>
+<thead>
+<tr>
+<th>特征</th>
+<th>A类</th>
+<th align="left">B类</th>
+<th>C类</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>用途模式</td>
+<td>全面综合的评估方法。  l组织的成熟度等级的评定。</td>
+<td align="left">自我评估。  l范围小，集中于关注的过程域。</td>
+<td>快估。  l检查特定的风险域</td>
+</tr>
+<tr>
+<td>优点</td>
+<td>覆盖全面、结果客观，能整体把握组织过程能力和清楚过程中的优势和弱势，评定等级。</td>
+<td align="left">发现过程问题并启动组织的过程改进，提高过程洞察力，风险小。</td>
+<td>投入小、反馈及时、见效快。</td>
+</tr>
+<tr>
+<td>缺点</td>
+<td>投入大、资源需求很多、风险大。</td>
+<td align="left">严格性和规范性低、不够全面，不能评定等级。</td>
+<td>深度和广度都不够，结果可信度低。</td>
+</tr>
+<tr>
+<td>评估发起人</td>
+<td>组织的最高管理层。</td>
+<td align="left">过程改进组织或质量管理部门。</td>
+<td>任何组织内部的经理。</td>
+</tr>
+<tr>
+<td>评估组组成</td>
+<td>内部和外部人员。</td>
+<td align="left">内部或外部人员。</td>
+<td></td>
+</tr>
+<tr>
+<td>评估组规模</td>
+<td>4 ～  10人＋评估组长。</td>
+<td align="left">2 ～  6人＋评估组长。</td>
+<td>1 ～  3人＋评估组长。</td>
+</tr>
+<tr>
+<td>评估组资格</td>
+<td>有经验。</td>
+<td align="left">有适当经验。</td>
+<td></td>
+</tr>
+<tr>
+<td>对评估组长的要求</td>
+<td>主评估师。</td>
+<td align="left">主评估师或受过专业过程评估培训的人员。</td>
+<td>有过程评估经验的人员</td>
+</tr>
+</tbody></table>
+<h4 id="质量计划的制订步骤"><a href="#质量计划的制订步骤" class="headerlink" title="质量计划的制订步骤"></a>质量计划的制订步骤</h4><ol>
+<li>了解项目的基本概况，收集项目有关资料</li>
+<li>确定项目质量目标树，明确项目质量管理组织机构</li>
+<li>制定项目质量控制程序</li>
+<li>项目质量计划的审定与实施</li>
+</ol>
+<h3 id="论述题"><a href="#论述题" class="headerlink" title="论述题"></a>论述题</h3><h4 id="软件过程管理的作用"><a href="#软件过程管理的作用" class="headerlink" title="软件过程管理的作用"></a>软件过程管理的作用</h4><p>略</p>
+<p>[清华大学出版社]: <a target="_blank" rel="noopener" href="http://www.tup.tsinghua.edu.cn/booksCenter/book_02225301.html">http://www.tup.tsinghua.edu.cn/booksCenter/book_02225301.html</a>	“软件过程管理”<br>[砺儒云]: <a target="_blank" rel="noopener" href="https://moodle.scnu.edu.cn/course/view.php?id=12768">https://moodle.scnu.edu.cn/course/view.php?id=12768</a>	“2022年软件过程管理”</p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/%E8%BD%AF%E4%BB%B6%E8%BF%87%E7%A8%8B%E7%AE%A1%E7%90%86/" rel="tag"># 软件过程管理</a>
+              <a href="/tags/%E8%BD%AF%E4%BB%B6%E8%BF%87%E7%A8%8B%E6%88%90%E7%86%9F%E5%BA%A6/" rel="tag"># 软件过程成熟度</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2022/06/18/shardedJedisPool-getResource-%E5%8D%A1%E4%BD%8F-%E8%B6%85%E6%97%B6/" rel="prev" title="shardedJedisPool.getResource()卡住/超时">
+                  <i class="fa fa-chevron-left"></i> shardedJedisPool.getResource()卡住/超时
+                </a>
+            </div>
+            <div class="post-nav-item">
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="beian"><a href="https://beian.miit.gov.cn/" rel="noopener" target="_blank">粤ICP备2021029314号 </a>
+      <img src="http://www.beian.gov.cn/img/new/gongan.png" alt="">
+  </div>
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Metaphy</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/muse/" rel="noopener" target="_blank">NexT.Muse</a> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/schemes/muse.js"></script><script src="/js/next-boot.js"></script>
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+</body>
+</html>
