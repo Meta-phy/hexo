@@ -20,23 +20,34 @@
 
 <script class="next-config" data-name="main" type="application/json">{"hostname":"metaphy.top","root":"/","images":"/images","scheme":"Muse","darkmode":false,"version":"8.12.1","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":false,"style":null},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"}}</script><script src="/js/config.js"></script>
 
-    <meta property="og:type" content="website">
-<meta property="og:title" content="Metaphy&#39;s Blog">
-<meta property="og:url" content="http://metaphy.top/index.html">
+    <meta name="description" content="SNMP原理与实践解决的问题网络规模越来越大，网络中不同种类、不同厂家、不同型号设备共存，网络管理繁琐低效 目的实现设备统一管理，只要设备支持SNMP协议，网络管理员就可以统一纳入管理 版本SNMPv1(1990)优点容易实现且成本低。 缺点缺少大量读取数据的能力,没有足够的安全机制。 场景适合规模较小,设备较少,安全性要求不高或本身就比较安全的网络,如校园网小型企业网。 SNMPv2(1996)">
+<meta property="og:type" content="article">
+<meta property="og:title" content="SNMP">
+<meta property="og:url" content="http://metaphy.top/2021/04/27/SNMP/index.html">
 <meta property="og:site_name" content="Metaphy&#39;s Blog">
+<meta property="og:description" content="SNMP原理与实践解决的问题网络规模越来越大，网络中不同种类、不同厂家、不同型号设备共存，网络管理繁琐低效 目的实现设备统一管理，只要设备支持SNMP协议，网络管理员就可以统一纳入管理 版本SNMPv1(1990)优点容易实现且成本低。 缺点缺少大量读取数据的能力,没有足够的安全机制。 场景适合规模较小,设备较少,安全性要求不高或本身就比较安全的网络,如校园网小型企业网。 SNMPv2(1996)">
 <meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://metaphy.top/">
+<meta property="og:image" content="http://metaphy.top/g">
+<meta property="og:image" content="http://metaphy.top/">
+<meta property="og:image" content="http://metaphy.top/images%5CPySNMP%E7%BC%96%E7%A0%81%E6%B5%81%E7%A8%8B%E5%9B%BE.png">
+<meta property="article:published_time" content="2021-04-26T16:00:00.000Z">
+<meta property="article:modified_time" content="2022-06-18T17:21:41.192Z">
 <meta property="article:author" content="Metaphy">
+<meta property="article:tag" content="SNMP">
+<meta property="article:tag" content="计算机网络">
 <meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://metaphy.top/">
 
 
-<link rel="canonical" href="http://metaphy.top/">
+<link rel="canonical" href="http://metaphy.top/2021/04/27/SNMP/">
 
 
 
-<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":true,"isPost":false,"lang":"zh-CN","comments":"","permalink":"","path":"index.html","title":""}</script>
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"http://metaphy.top/2021/04/27/SNMP/","path":"2021/04/27/SNMP/","title":"SNMP"}</script>
 
 <script class="next-config" data-name="calendar" type="application/json">""</script>
-<title>Metaphy's Blog</title>
+<title>SNMP | Metaphy's Blog</title>
   
 
 
@@ -63,7 +74,7 @@
 
     <a href="/" class="brand" rel="start">
       <i class="logo-line"></i>
-      <h1 class="site-title">Metaphy's Blog</h1>
+      <p class="site-title">Metaphy's Blog</p>
       <i class="logo-line"></i>
     </a>
   </div>
@@ -91,7 +102,7 @@
 
   <aside class="sidebar">
 
-    <div class="sidebar-inner sidebar-overview-active">
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
       <ul class="sidebar-nav">
         <li class="sidebar-nav-toc">
           文章目录
@@ -104,6 +115,7 @@
       <div class="sidebar-panel-container">
         <!--noindex-->
         <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#SNMP%E5%8E%9F%E7%90%86%E4%B8%8E%E5%AE%9E%E8%B7%B5"><span class="nav-number">1.</span> <span class="nav-text">SNMP原理与实践</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%A7%A3%E5%86%B3%E7%9A%84%E9%97%AE%E9%A2%98"><span class="nav-number">1.1.</span> <span class="nav-text">解决的问题</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%9B%AE%E7%9A%84"><span class="nav-number">1.2.</span> <span class="nav-text">目的</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%89%88%E6%9C%AC"><span class="nav-number">1.3.</span> <span class="nav-text">版本</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#SNMPv1-1990"><span class="nav-number">1.3.1.</span> <span class="nav-text">SNMPv1(1990)</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%BC%98%E7%82%B9"><span class="nav-number">1.3.1.1.</span> <span class="nav-text">优点</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%BC%BA%E7%82%B9"><span class="nav-number">1.3.1.2.</span> <span class="nav-text">缺点</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%9C%BA%E6%99%AF"><span class="nav-number">1.3.1.3.</span> <span class="nav-text">场景</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#SNMPv2-1996"><span class="nav-number">1.3.2.</span> <span class="nav-text">SNMPv2(1996)</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%BC%98%E7%82%B9-1"><span class="nav-number">1.3.2.1.</span> <span class="nav-text">优点</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%BC%BA%E7%82%B9-1"><span class="nav-number">1.3.2.2.</span> <span class="nav-text">缺点</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%9C%BA%E6%99%AF-1"><span class="nav-number">1.3.2.3.</span> <span class="nav-text">场景</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#SNMPv3-1998"><span class="nav-number">1.3.3.</span> <span class="nav-text">SNMPv3(1998)</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%BC%98%E7%82%B9-2"><span class="nav-number">1.3.3.1.</span> <span class="nav-text">优点</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%9C%BA%E6%99%AF-2"><span class="nav-number">1.3.3.2.</span> <span class="nav-text">场景</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%A6%82%E5%BF%B5"><span class="nav-number">1.3.3.3.</span> <span class="nav-text">概念</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#%E7%94%A8%E6%88%B7%E7%BB%84-Group"><span class="nav-number">1.3.3.3.1.</span> <span class="nav-text">用户组( Group)</span></a><ol class="nav-child"><li class="nav-item nav-level-6"><a class="nav-link" href="#%E5%AE%89%E5%85%A8%E7%BA%A7%E5%88%AB"><span class="nav-number">1.3.3.3.1.1.</span> <span class="nav-text">安全级别</span></a></li></ol></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E8%A7%86%E5%9B%BE-view"><span class="nav-number">1.3.3.3.2.</span> <span class="nav-text">视图(view)</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#SNMP3%E5%AE%89%E5%85%A8%E6%80%A7%E5%A2%9E%E5%BC%BA"><span class="nav-number">1.3.3.4.</span> <span class="nav-text">SNMP3安全性增强</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#%E7%94%A8%E6%88%B7%E5%AE%89%E5%85%A8%E6%A8%A1%E5%9D%97USM"><span class="nav-number">1.3.3.4.1.</span> <span class="nav-text">用户安全模块USM</span></a><ol class="nav-child"><li class="nav-item nav-level-6"><a class="nav-link" href="#%E8%BA%AB%E4%BB%BD%E9%AA%8C%E8%AF%81"><span class="nav-number">1.3.3.4.1.1.</span> <span class="nav-text">身份验证</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#%E6%95%B0%E6%8D%AE%E5%8A%A0%E5%AF%86"><span class="nav-number">1.3.3.4.1.2.</span> <span class="nav-text">数据加密</span></a></li></ol></li><li class="nav-item nav-level-5"><a class="nav-link" href="#VACM"><span class="nav-number">1.3.3.4.2.</span> <span class="nav-text">VACM</span></a></li></ol></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%9F%BA%E6%9C%AC%E6%A6%82%E5%BF%B5"><span class="nav-number">1.4.</span> <span class="nav-text">基本概念</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#NMS"><span class="nav-number">1.4.1.</span> <span class="nav-text">NMS</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Agent"><span class="nav-number">1.4.2.</span> <span class="nav-text">Agent</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#MIB"><span class="nav-number">1.4.3.</span> <span class="nav-text">MIB</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%85%AC%E6%9C%89MIB"><span class="nav-number">1.4.3.1.</span> <span class="nav-text">公有MIB</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%A7%81%E6%9C%89MIB"><span class="nav-number">1.4.3.2.</span> <span class="nav-text">私有MIB</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%B8%B8%E8%A7%81MIB%E8%8A%82%E7%82%B9"><span class="nav-number">1.4.3.3.</span> <span class="nav-text">常见MIB节点</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#%E7%94%A8%E4%BA%8E%E6%9F%A5%E8%AF%A2%E7%9A%84%E8%8A%82%E7%82%B9"><span class="nav-number">1.4.3.3.1.</span> <span class="nav-text">用于查询的节点</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E7%94%A8%E4%BA%8E%E8%AD%A6%E5%91%8A"><span class="nav-number">1.4.3.3.2.</span> <span class="nav-text">用于警告</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E8%AE%BF%E9%97%AE%E6%9D%83%E9%99%90"><span class="nav-number">1.4.3.4.</span> <span class="nav-text">访问权限</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%8F%98%E9%87%8F"><span class="nav-number">1.4.3.5.</span> <span class="nav-text">变量</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Management-object"><span class="nav-number">1.4.4.</span> <span class="nav-text">Management object</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Device"><span class="nav-number">1.4.5.</span> <span class="nav-text">Device</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%BB%93%E6%9E%84%E5%9B%BE"><span class="nav-number">1.4.6.</span> <span class="nav-text">结构图</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%9F%BA%E6%9C%AC%E6%93%8D%E4%BD%9C"><span class="nav-number">1.5.</span> <span class="nav-text">基本操作</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#PySNMP"><span class="nav-number">1.6.</span> <span class="nav-text">PySNMP</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%AB%98%E5%B1%82%E6%8E%A5%E5%8F%A3%E6%9E%B6%E6%9E%84"><span class="nav-number">1.6.1.</span> <span class="nav-text">高层接口架构</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%BC%96%E7%A0%81%E6%B5%81%E7%A8%8B%E5%9B%BE"><span class="nav-number">1.6.2.</span> <span class="nav-text">编码流程图</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%B1%BB"><span class="nav-number">1.6.2.1.</span> <span class="nav-text">类</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#SnmpEngine%E7%B1%BB"><span class="nav-number">1.6.2.1.1.</span> <span class="nav-text">SnmpEngine类</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#UsmUserData"><span class="nav-number">1.6.2.1.2.</span> <span class="nav-text">UsmUserData</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#UdpTransportTarget"><span class="nav-number">1.6.2.1.3.</span> <span class="nav-text">UdpTransportTarget</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#ContextData"><span class="nav-number">1.6.2.1.4.</span> <span class="nav-text">ContextData</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#Objectldentity"><span class="nav-number">1.6.2.1.5.</span> <span class="nav-text">Objectldentity</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#ObjectType"><span class="nav-number">1.6.2.1.6.</span> <span class="nav-text">ObjectType</span></a></li></ol></li></ol></li></ol></li></ol></li></ol></div>
         </div>
         <!--/noindex-->
 
@@ -155,466 +167,17 @@
 </noscript>
 
 
-    <div class="main-inner index posts-expand">
+    <div class="main-inner post posts-expand">
 
-    
+
+  
 
 
 <div class="post-block">
   
   
 
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="http://metaphy.top/2022/06/19/%E8%BD%AF%E4%BB%B6%E8%BF%87%E7%A8%8B%E7%AE%A1%E7%90%86%E5%A4%8D%E4%B9%A0/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="Metaphy">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Metaphy's Blog">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="undefined | Metaphy's Blog">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2022/06/19/%E8%BD%AF%E4%BB%B6%E8%BF%87%E7%A8%8B%E7%AE%A1%E7%90%86%E5%A4%8D%E4%B9%A0/" class="post-title-link" itemprop="url">软件过程管理复习笔记</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">发表于</span>
-      
-
-      <time title="创建时间：2022-06-19 01:02:34 / 修改时间：01:11:43" itemprop="dateCreated datePublished" datetime="2022-06-19T01:02:34+08:00">2022-06-19</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">分类于</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/SCNU%E7%AC%94%E8%AE%B0/" itemprop="url" rel="index"><span itemprop="name">SCNU笔记</span></a>
-        </span>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <p><strong>SCNU</strong>2022年《软件过程管理》课程复习笔记</p>
-<p>内容来自课本与砺儒云ppt，部分答案经过整理，有删改</p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2022/06/19/%E8%BD%AF%E4%BB%B6%E8%BF%87%E7%A8%8B%E7%AE%A1%E7%90%86%E5%A4%8D%E4%B9%A0/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="http://metaphy.top/2022/06/18/shardedJedisPool-getResource-%E5%8D%A1%E4%BD%8F-%E8%B6%85%E6%97%B6/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="Metaphy">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Metaphy's Blog">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="undefined | Metaphy's Blog">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2022/06/18/shardedJedisPool-getResource-%E5%8D%A1%E4%BD%8F-%E8%B6%85%E6%97%B6/" class="post-title-link" itemprop="url">shardedJedisPool.getResource()卡住/超时</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">发表于</span>
-      
-
-      <time title="创建时间：2022-06-18 01:31:26 / 修改时间：01:49:54" itemprop="dateCreated datePublished" datetime="2022-06-18T01:31:26+08:00">2022-06-18</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">分类于</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/%E5%BC%82%E5%B8%B8-%E6%8A%A5%E9%94%99/" itemprop="url" rel="index"><span itemprop="name">异常/报错</span></a>
-        </span>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <h3 id="问题"><a href="#问题" class="headerlink" title="问题"></a>问题</h3><p>微服务启动后正常使用，经过一段时间请求一直等待响应，经过调试排错，判断在以下代码处卡死。</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">shardedJedisPool.getResource()</span><br></pre></td></tr></table></figure>
-
-<h3 id="原因"><a href="#原因" class="headerlink" title="原因"></a>原因</h3><p>ShardedJedisPool未设置阻塞超时时间，连接建立后未关闭连接，导致连接数达到最大值，阻塞。</p>
-<blockquote>
-<p>BlockWhenExhausted：连接耗尽时是否阻塞, false报异常,ture阻塞直到超时, 默认true<br>MaxWaitMillis：获取连接时的最大等待毫秒数（如果设置为阻塞时）</p>
-</blockquote>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2022/06/18/shardedJedisPool-getResource-%E5%8D%A1%E4%BD%8F-%E8%B6%85%E6%97%B6/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="http://metaphy.top/2022/06/17/Autowired%E6%97%A0%E6%B3%95%E8%87%AA%E5%8A%A8%E8%A3%85%E9%85%8D%E6%88%96%E5%80%BC%E4%B8%BAnull/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="Metaphy">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Metaphy's Blog">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="undefined | Metaphy's Blog">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2022/06/17/Autowired%E6%97%A0%E6%B3%95%E8%87%AA%E5%8A%A8%E8%A3%85%E9%85%8D%E6%88%96%E5%80%BC%E4%B8%BAnull/" class="post-title-link" itemprop="url">Autowired无法自动装配或值为null</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">发表于</span>
-
-      <time title="创建时间：2022-06-17 03:08:52" itemprop="dateCreated datePublished" datetime="2022-06-17T03:08:52+08:00">2022-06-17</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar-check"></i>
-      </span>
-      <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2022-06-18 01:51:37" itemprop="dateModified" datetime="2022-06-18T01:51:37+08:00">2022-06-18</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">分类于</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/%E5%BC%82%E5%B8%B8-%E6%8A%A5%E9%94%99/" itemprop="url" rel="index"><span itemprop="name">异常/报错</span></a>
-        </span>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <h3 id="问题"><a href="#问题" class="headerlink" title="问题"></a>问题</h3><p>写的配置类无法在SpringBoot的ApplicationTests类中自动装配且装配为null</p>
-<h3 id="原因"><a href="#原因" class="headerlink" title="原因"></a>原因</h3><p>无法自动装配为idea报错，原因为main&#x2F;java下没有@SpringBootApplication的主类。</p>
-<p>装配为null的原因是Test类注解没写对，未启动Spring容器</p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2022/06/17/Autowired%E6%97%A0%E6%B3%95%E8%87%AA%E5%8A%A8%E8%A3%85%E9%85%8D%E6%88%96%E5%80%BC%E4%B8%BAnull/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="http://metaphy.top/2022/06/14/hexo%E5%86%8D%E9%83%A8%E7%BD%B2/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="Metaphy">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Metaphy's Blog">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="undefined | Metaphy's Blog">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2022/06/14/hexo%E5%86%8D%E9%83%A8%E7%BD%B2/" class="post-title-link" itemprop="url">hexo再部署</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">发表于</span>
-
-      <time title="创建时间：2022-06-14 23:07:13" itemprop="dateCreated datePublished" datetime="2022-06-14T23:07:13+08:00">2022-06-14</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar-check"></i>
-      </span>
-      <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2022-06-15 02:37:33" itemprop="dateModified" datetime="2022-06-15T02:37:33+08:00">2022-06-15</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">分类于</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/%E6%8A%80%E6%9C%AF/" itemprop="url" rel="index"><span itemprop="name">技术</span></a>
-        </span>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <h3 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h3><p>通过Node.js安装hexo</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install -g hexo-cli</span><br></pre></td></tr></table></figure>
-
-<p>在新建文件夹内执行初始化命令</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">hexo init</span><br><span class="line">npm install</span><br></pre></td></tr></table></figure>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2022/06/14/hexo%E5%86%8D%E9%83%A8%E7%BD%B2/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="http://metaphy.top/2022/06/14/hello-world/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="Metaphy">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Metaphy's Blog">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="undefined | Metaphy's Blog">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2022/06/14/hello-world/" class="post-title-link" itemprop="url">Hello World</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">发表于</span>
-
-      <time title="创建时间：2022-06-14 22:58:31" itemprop="dateCreated datePublished" datetime="2022-06-14T22:58:31+08:00">2022-06-14</time>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <p>Welcome to <a target="_blank" rel="noopener" href="https://hexo.io/">Hexo</a>! This is your very first post. Check <a target="_blank" rel="noopener" href="https://hexo.io/docs/">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a target="_blank" rel="noopener" href="https://hexo.io/docs/troubleshooting.html">troubleshooting</a> or you can ask me on <a target="_blank" rel="noopener" href="https://github.com/hexojs/hexo/issues">GitHub</a>.</p>
-<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo new <span class="string">&quot;My New Post&quot;</span></span><br></pre></td></tr></table></figure>
-
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/writing.html">Writing</a></p>
-<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/server.html">Server</a></p>
-<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/generating.html">Generating</a></p>
-<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/one-command-deployment.html">Deployment</a></p>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
     <link itemprop="mainEntityOfPage" href="http://metaphy.top/2021/04/27/SNMP/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -628,13 +191,13 @@
     </span>
 
     <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="undefined | Metaphy's Blog">
+      <meta itemprop="name" content="SNMP | Metaphy's Blog">
       <meta itemprop="description" content="">
     </span>
       <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2021/04/27/SNMP/" class="post-title-link" itemprop="url">SNMP</a>
-        </h2>
+        <h1 class="post-title" itemprop="name headline">
+          SNMP
+        </h1>
 
         <div class="post-meta-container">
           <div class="post-meta">
@@ -673,7 +236,7 @@
     
     
     <div class="post-body" itemprop="articleBody">
-          <h1 id="SNMP原理与实践"><a href="#SNMP原理与实践" class="headerlink" title="SNMP原理与实践"></a>SNMP原理与实践</h1><h2 id="解决的问题"><a href="#解决的问题" class="headerlink" title="解决的问题"></a>解决的问题</h2><p>网络规模越来越大，网络中不同种类、不同厂家、不同型号设备共存，网络管理繁琐低效</p>
+        <h1 id="SNMP原理与实践"><a href="#SNMP原理与实践" class="headerlink" title="SNMP原理与实践"></a>SNMP原理与实践</h1><h2 id="解决的问题"><a href="#解决的问题" class="headerlink" title="解决的问题"></a>解决的问题</h2><p>网络规模越来越大，网络中不同种类、不同厂家、不同型号设备共存，网络管理繁琐低效</p>
 <h2 id="目的"><a href="#目的" class="headerlink" title="目的"></a>目的</h2><p>实现设备统一管理，只要设备支持SNMP协议，网络管理员就可以统一纳入管理</p>
 <h2 id="版本"><a href="#版本" class="headerlink" title="版本"></a>版本</h2><h3 id="SNMPv1-1990"><a href="#SNMPv1-1990" class="headerlink" title="SNMPv1(1990)"></a>SNMPv1(1990)</h3><h4 id="优点"><a href="#优点" class="headerlink" title="优点"></a>优点</h4><p>容易实现且成本低。</p>
 <h4 id="缺点"><a href="#缺点" class="headerlink" title="缺点"></a>缺点</h4><p>缺少大量读取数据的能力,没有足够的安全机制。</p>
@@ -794,7 +357,6 @@
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">userData= UsmUserData(</span><br><span class="line">                        &#x27;admin&#x27;,								#用户名</span><br><span class="line">                        authkey =&#x27;Admin@1231,					#认证密钥</span><br><span class="line">                        privkey = &#x27;Huawei@123&#x27;,					#加密密钥</span><br><span class="line">                        authProtocol = usmHMACSHAAuthProtocol	#认证算法</span><br><span class="line">                        privProtocol = usmAesCfb128Protocol		#加密算法</span><br><span class="line">                        )</span><br></pre></td></tr></table></figure>
 
 <h5 id="UdpTransportTarget"><a href="#UdpTransportTarget" class="headerlink" title="UdpTransportTarget"></a>UdpTransportTarget</h5><h5 id="ContextData"><a href="#ContextData" class="headerlink" title="ContextData"></a>ContextData</h5><h5 id="Objectldentity"><a href="#Objectldentity" class="headerlink" title="Objectldentity"></a>Objectldentity</h5><h5 id="ObjectType"><a href="#ObjectType" class="headerlink" title="ObjectType"></a>ObjectType</h5>
-      
     </div>
 
     
@@ -802,11 +364,26 @@
     
 
     <footer class="post-footer">
-        <div class="post-eof"></div>
-      
+          <div class="post-tags">
+              <a href="/tags/SNMP/" rel="tag"># SNMP</a>
+              <a href="/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/" rel="tag"># 计算机网络</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+            </div>
+            <div class="post-nav-item">
+                <a href="/2022/06/14/hello-world/" rel="next" title="Hello World">
+                  Hello World <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
     </footer>
   </article>
 </div>
+
 
 
 
