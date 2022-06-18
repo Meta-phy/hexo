@@ -655,7 +655,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2022-06-19 01:21:41" itemprop="dateModified" datetime="2022-06-19T01:21:41+08:00">2022-06-19</time>
+      <time title="修改时间：2022-06-19 01:26:43" itemprop="dateModified" datetime="2022-06-19T01:26:43+08:00">2022-06-19</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -679,125 +679,14 @@
     <div class="post-body" itemprop="articleBody">
           <h1 id="SNMP原理与实践"><a href="#SNMP原理与实践" class="headerlink" title="SNMP原理与实践"></a>SNMP原理与实践</h1><h2 id="解决的问题"><a href="#解决的问题" class="headerlink" title="解决的问题"></a>解决的问题</h2><p>网络规模越来越大，网络中不同种类、不同厂家、不同型号设备共存，网络管理繁琐低效</p>
 <h2 id="目的"><a href="#目的" class="headerlink" title="目的"></a>目的</h2><p>实现设备统一管理，只要设备支持SNMP协议，网络管理员就可以统一纳入管理</p>
-<h2 id="版本"><a href="#版本" class="headerlink" title="版本"></a>版本</h2><h3 id="SNMPv1-1990"><a href="#SNMPv1-1990" class="headerlink" title="SNMPv1(1990)"></a>SNMPv1(1990)</h3><h4 id="优点"><a href="#优点" class="headerlink" title="优点"></a>优点</h4><p>容易实现且成本低。</p>
-<h4 id="缺点"><a href="#缺点" class="headerlink" title="缺点"></a>缺点</h4><p>缺少大量读取数据的能力,没有足够的安全机制。</p>
-<h4 id="场景"><a href="#场景" class="headerlink" title="场景"></a>场景</h4><p>适合规模较小,设备较少,安全性要求不高或本身就比较安全的网络,如校园网小型企业网。</p>
-<h3 id="SNMPv2-1996"><a href="#SNMPv2-1996" class="headerlink" title="SNMPv2(1996)"></a>SNMPv2(1996)</h3><h4 id="优点-1"><a href="#优点-1" class="headerlink" title="优点"></a>优点</h4><p>扩充了 SNMPV1的功能,增加 <strong>Get Bulk</strong>和 <strong>inform</strong>操作。</p>
-<blockquote>
-<p>GetBulk：实现了NMS对被管理设备的信息群查询。</p>
-<p>Inform：被管理设备向NMS（Network Management System，网络管理系统）主动发送告警，需要NMS进行接收确认。</p>
-</blockquote>
-<h4 id="缺点-1"><a href="#缺点-1" class="headerlink" title="缺点"></a>缺点</h4><p>没有足够的安全机制。</p>
-<h4 id="场景-1"><a href="#场景-1" class="headerlink" title="场景"></a>场景</h4><p>适合规模较大,设备较多安全性要求不高或本身就比较安全,但业务比较繁忙有可能发生流量拥塞的网络。</p>
-<h3 id="SNMPv3-1998"><a href="#SNMPv3-1998" class="headerlink" title="SNMPv3(1998)"></a>SNMPv3(1998)</h3><h4 id="优点-2"><a href="#优点-2" class="headerlink" title="优点"></a>优点</h4><p>增加了身份验证和加密处理。新的SNMP体系结构,适应性强、方便管理、扩展性好。</p>
-<blockquote>
-<p>适应性强：适用于多种操作环境，既可以管理最简单的网络，又能够满足复杂网络的 管理需求。</p>
-<p>方便管理：SNMP框架体系由多个功能相对独立的子系统或应用程序集合而成，因而 可以很方便地对其进行管理。例如，若系统发生了故障，可以根据发生故障的功能类 型，定位到相应的子系统。</p>
-<p>扩展性好：可以很方便地进行系统扩展。比如，为了应用新的安全协议，就可以在安 全子系统中为其定义单独的模块，从而在SNMP中支持该协议。</p>
-</blockquote>
-<h4 id="场景-2"><a href="#场景-2" class="headerlink" title="场景"></a>场景</h4><p>适合各种规模,尤其是对安全性要求较高,只有合法的管理员才能对设备进行管理的网络。</p>
-<h4 id="概念"><a href="#概念" class="headerlink" title="概念"></a>概念</h4><p>SNMP在执行Get、Set等基本操作时面临安全威胁, SNMP V3版本较v1,νc在安全性方面做了提升。</p>
-<h5 id="用户组-Group"><a href="#用户组-Group" class="headerlink" title="用户组( Group)"></a>用户组( Group)</h5><p>拥有特定安全级别属性的一个用户集合。</p>
-<h6 id="安全级别"><a href="#安全级别" class="headerlink" title="安全级别"></a>安全级别</h6><ul>
-<li>1级：privacy(鉴权且加密</li>
-<li>2级：authentication(只鉴权</li>
-<li>3级：authentication(不鉴权不加密)</li>
-</ul>
-<h5 id="视图-view"><a href="#视图-view" class="headerlink" title="视图(view)"></a>视图(view)</h5><p>允许用户访问的mib节点集合。</p>
-<h4 id="SNMP3安全性增强"><a href="#SNMP3安全性增强" class="headerlink" title="SNMP3安全性增强"></a>SNMP3安全性增强</h4><h5 id="用户安全模块USM"><a href="#用户安全模块USM" class="headerlink" title="用户安全模块USM"></a>用户安全模块USM</h5><p>(User- based Security Mode)</p>
-<h6 id="身份验证"><a href="#身份验证" class="headerlink" title="身份验证"></a>身份验证</h6><p>Agen或NMS接到信息时首先必须确认信息是否来自有权限的NM5或λqent,并且信息在传输过程中未被改变。</p>
-<h6 id="数据加密"><a href="#数据加密" class="headerlink" title="数据加密"></a>数据加密</h6><p>通过对称密钥系统,NMS和 Agent共享同一密钥对数据进行加密和解密。</p>
-<h5 id="VACM"><a href="#VACM" class="headerlink" title="VACM"></a>VACM</h5><p>基于视图的访问控制模块VACM(view- based Access Control model)</p>
-<p>对用户组实现基于视图的访问控制。</p>
-<h2 id="基本概念"><a href="#基本概念" class="headerlink" title="基本概念"></a>基本概念</h2><h3 id="NMS"><a href="#NMS" class="headerlink" title="NMS"></a>NMS</h3><p>( Network Management System)</p>
-<p>采用SNMP协议对网络设备进行管理的系统。</p>
-<h3 id="Agent"><a href="#Agent" class="headerlink" title="Agent"></a>Agent</h3><p>被管理设备中的一个代理进程,与NMS进行交互。</p>
-<h3 id="MIB"><a href="#MIB" class="headerlink" title="MIB"></a>MIB</h3><p>( Management information base)</p>
-<p>MIB是一个<strong>数据库</strong>,指明了<strong>被管理设备所维护的变量</strong>(即能够被 Agent.查询和设置的信息)。</p>
-<p>MIB在数据库中定义了被管理设备的一系列属性:</p>
-<ul>
-<li>对象标识符( Object Identifier,OID)</li>
-<li>对象的状态</li>
-<li>对象的访问权限</li>
-<li>对象的数据类型等</li>
-</ul>
-<p>MIB给出了一个数据结构,包含了网络中所有可能的被管理对象的集合。因为数据结构与树相似,MIB又被称为<strong>对象命名树</strong>。</p>
-<p>MIB的定义与具体的网络管理协议无关。设备制造商可以在产品（如路由器）中包含SNMP代理软件，并保证在定义新的MIB项目后该软件仍遵守标准。用户可以使用同一网络管理客户软件来管理具有不同版本MIB的多个路由器。若一台路由器上不支持此MIB，那么就无法 提供相应的功能。</p>
-<p>MIB可以分为公有MIB和私有MIB两种。</p>
-<h4 id="公有MIB"><a href="#公有MIB" class="headerlink" title="公有MIB"></a>公有MIB</h4><p>一般由RFC定义，主要用来对各种公有协议进行结构化设计和接口标准化 处理。大多数的设备制造商都需要按照RFC的定义来提供SNMP接口。</p>
-<h4 id="私有MIB"><a href="#私有MIB" class="headerlink" title="私有MIB"></a>私有MIB</h4><p>是公有MIB的必要补充，当公司自行开发私有协议或者特有功能时，可以利用私有MIB来完善SNMP接口的管理功能，同时对第三方网管软件管理存在私有协 议或特有功能的设备提供支持。如华为公司企业节点为：1.3.6.1.4.1.2011</p>
-<h4 id="常见MIB节点"><a href="#常见MIB节点" class="headerlink" title="常见MIB节点"></a>常见MIB节点</h4><h5 id="用于查询的节点"><a href="#用于查询的节点" class="headerlink" title="用于查询的节点"></a>用于查询的节点</h5><table>
-<thead>
-<tr>
-<th>OID</th>
-<th>节点名称</th>
-<th>数据类型</th>
-<th>最大访问权限</th>
-<th>含义</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>1.3.6.1.2.1.2.1</td>
-<td>ifNumber</td>
-<td>Integer</td>
-<td>read-only</td>
-<td>系统中网络接口的数量(不关注接口当前状态</td>
-</tr>
-<tr>
-<td>1.3.6.1.4.1.2011.5.25. 41.1.2.1.1.3</td>
-<td>hwlpAdEnt NetMmask</td>
-<td>IpAddress</td>
-<td>read- create</td>
-<td>IP地址的子网掩码。</td>
-</tr>
-</tbody></table>
-<h5 id="用于警告"><a href="#用于警告" class="headerlink" title="用于警告"></a>用于警告</h5><table>
-<thead>
-<tr>
-<th>OID</th>
-<th>节点名称</th>
-<th>绑定变量</th>
-<th>含义</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>1.3.6.1.6.3.1.1.5.3</td>
-<td>linkDown</td>
-<td>ifIndex ifAdminStatus ifOperStatus ifDesc</td>
-<td>经检测到由于 ifOperStatus节点对象已经从其他状态(但不是 notPresen状态)进入Down状态。这里的其他状态由 ifOperStatus的值显示。</td>
-</tr>
-</tbody></table>
-<h4 id="访问权限"><a href="#访问权限" class="headerlink" title="访问权限"></a>访问权限</h4><p>MIB节点的最大<strong>访问权限</strong>表明网管能够通过该MIB节点对设备进行的操作</p>
-<ul>
-<li>not-accessible：无法进行任何操作。</li>
-<li>read-only：可以读取信息。</li>
-<li>read-write：可以读取信息和修改配置。</li>
-<li>read-create：可以读取信息、修改配置、新增配置和删除配置。</li>
-</ul>
-<h4 id="变量"><a href="#变量" class="headerlink" title="变量"></a>变量</h4><p>设备在生成告警时，不仅会上报当前发生的告警类型，同时会绑定一些<strong>变量</strong>。比如当发送接口linkDown告警时，需要同时绑定接口索引，接口的当前配置状态等变量。</p>
-<ul>
-<li>ifIndex：接口索引（编号）</li>
-<li>ifAdminStatus：管理状态，即接口是否被shutdown：1，undo shutdown；2， shutdown</li>
-<li>ifOperStasuts：接口当前的操作状态，即接口的链路层协议状态：1，Up；2，Down</li>
-<li>ifDesc：接口描述</li>
-</ul>
-<h3 id="Management-object"><a href="#Management-object" class="headerlink" title="Management object"></a>Management object</h3><p>被管理对象,如设备中的某个硬件(如接口板),也可以是在硬件或软件上配置的参数集合。</p>
-<h3 id="Device"><a href="#Device" class="headerlink" title="Device"></a>Device</h3><p>被管理设备。</p>
-<h3 id="结构图"><a href="#结构图" class="headerlink" title="结构图"></a>结构图</h3><p><img src="/" alt="SNMP"></p>
-<h2 id="基本操作"><a href="#基本操作" class="headerlink" title="基本操作"></a>基本操作</h2><p><img src="/g" alt="操作"></p>
-<h2 id="PySNMP"><a href="#PySNMP" class="headerlink" title="PySNMP"></a>PySNMP</h2><h3 id="高层接口架构"><a href="#高层接口架构" class="headerlink" title="高层接口架构"></a>高层接口架构</h3><p>PySNMP高层接口组成如下图所示，实现SNMPV3基本操作涉及的类有SnmpEngine类，UsmUserData类, UdpTransportTarget类, ContextData类, Objectldentity类, ObjectType 类;</p>
-<p>涉及的方法有getCmd , setCmd , nextCmd, bulkCmd , sendNotification ,本文只介绍 getCmd方法，其余方法的使用与其类似。</p>
-<p><img src="/" alt="PyNMP"></p>
-<h3 id="编码流程图"><a href="#编码流程图" class="headerlink" title="编码流程图"></a>编码流程图</h3><p><img src="/images%5CPySNMP%E7%BC%96%E7%A0%81%E6%B5%81%E7%A8%8B%E5%9B%BE.png" alt="PySNMP编码流程图"></p>
-<h4 id="类"><a href="#类" class="headerlink" title="类"></a>类</h4><h5 id="SnmpEngine类"><a href="#SnmpEngine类" class="headerlink" title="SnmpEngine类"></a>SnmpEngine类</h5><p>PySNMP模块中的一个核心对象， PySNMP实现所有SNMP操作都涉及SnmpEngine类实例。</p>
-<p>使用方法</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">engine = SnmpEngine()</span><br></pre></td></tr></table></figure>
-
-<h5 id="UsmUserData"><a href="#UsmUserData" class="headerlink" title="UsmUserData"></a>UsmUserData</h5><p>PySNMP模块对SNMPv3用户安全模块USM的实现。可以利用该类创建SNMPv3用户及其对应的认证与加密算法。</p>
-<p>使用方法：</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">userData= UsmUserData(</span><br><span class="line">                        &#x27;admin&#x27;,								#用户名</span><br><span class="line">                        authkey =&#x27;Admin@1231,					#认证密钥</span><br><span class="line">                        privkey = &#x27;Huawei@123&#x27;,					#加密密钥</span><br><span class="line">                        authProtocol = usmHMACSHAAuthProtocol	#认证算法</span><br><span class="line">                        privProtocol = usmAesCfb128Protocol		#加密算法</span><br><span class="line">                        )</span><br></pre></td></tr></table></figure>
-
-<h5 id="UdpTransportTarget"><a href="#UdpTransportTarget" class="headerlink" title="UdpTransportTarget"></a>UdpTransportTarget</h5><h5 id="ContextData"><a href="#ContextData" class="headerlink" title="ContextData"></a>ContextData</h5><h5 id="Objectldentity"><a href="#Objectldentity" class="headerlink" title="Objectldentity"></a>Objectldentity</h5><h5 id="ObjectType"><a href="#ObjectType" class="headerlink" title="ObjectType"></a>ObjectType</h5>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2021/04/27/SNMP/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
       
     </div>
 
