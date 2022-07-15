@@ -116,18 +116,18 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">17</span>
+          <span class="site-state-item-count">22</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
           <a href="/categories/">
-        <span class="site-state-item-count">6</span>
+        <span class="site-state-item-count">7</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">
           <a href="/tags/">
-        <span class="site-state-item-count">25</span>
+        <span class="site-state-item-count">31</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -156,6 +156,455 @@
 
 
     <div class="main-inner index posts-expand">
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="http://metaphy.top/2022/07/14/Rust%E7%A9%BA%E5%80%BC/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Metaphy">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Metaphy's Blog">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | Metaphy's Blog">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2022/07/14/Rust%E7%A9%BA%E5%80%BC/" class="post-title-link" itemprop="url">Rust空值</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2022-07-14 11:24:42" itemprop="dateCreated datePublished" datetime="2022-07-14T11:24:42+08:00">2022-07-14</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2022-07-15 10:49:46" itemprop="dateModified" datetime="2022-07-15T10:49:46+08:00">2022-07-15</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E7%AC%94%E8%AE%B0/" itemprop="url" rel="index"><span itemprop="name">笔记</span></a>
+        </span>
+          ，
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E7%AC%94%E8%AE%B0/Rust/" itemprop="url" rel="index"><span itemprop="name">Rust</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h3 id="Rust中的空值"><a href="#Rust中的空值" class="headerlink" title="Rust中的空值"></a>Rust中的空值</h3><p>Rust中并没有<code>Null</code>值，而是<code>None</code>。</p>
+<h4 id="None"><a href="#None" class="headerlink" title="None"></a>None</h4><p><code>None</code>位于枚举类 <code>Option&lt;T&gt;</code>中</p>
+<figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">enum</span> <span class="title class_">Option</span>&lt;T&gt;　&#123;</span><br><span class="line">	<span class="title function_ invoke__">Some</span>(T),</span><br><span class="line">	<span class="literal">None</span>,</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>对于一个变量，如果他的类型为<code>T</code>而不是<code>Option&lt;T&gt;</code>，则说明该变量不为空。</p>
+<p>如果一个变量类型为<code>Option&lt;T&gt;</code>，则可能为空</p>
+<h4 id="获取Option-lt-T-gt-的值"><a href="#获取Option-lt-T-gt-的值" class="headerlink" title="获取Option&lt;T&gt;的值"></a>获取Option&lt;T&gt;的值</h4><p>对于<code>Option&lt;T&gt;</code> 我们不能直接进行运算。</p>
+<figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> <span class="variable">a</span> = <span class="number">10</span>;</span><br><span class="line"><span class="keyword">let</span> <span class="variable">b</span>:<span class="type">Option</span>&lt;<span class="type">i32</span>&gt; = <span class="title function_ invoke__">Some</span>(<span class="number">20</span>);</span><br><span class="line"><span class="keyword">let</span> <span class="variable">c</span>:<span class="type">Option</span>&lt;<span class="type">i32</span>&gt; = <span class="literal">None</span>;</span><br><span class="line"><span class="comment">//此行代码会报错</span></span><br><span class="line"><span class="comment">//let res = a + b;</span></span><br><span class="line"><span class="built_in">println!</span>(<span class="string">&quot;a=&#123;&#125;,b=&#123;&#125;,c=&#123;&#125;&quot;</span>,a,b.<span class="title function_ invoke__">unwrap</span>(),c.<span class="title function_ invoke__">unwrap_or</span>(-<span class="number">1</span>));</span><br></pre></td></tr></table></figure>
+
+<p>运行结果为</p>
+<figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">a=<span class="number">10</span>,b=<span class="number">20</span>,c=-<span class="number">1</span></span><br></pre></td></tr></table></figure>
+
+
+
+<p>使用 <code>unwrap()</code> 将返回对应的<code>Some</code>值.</p>
+<p>[RustWiki]: <a target="_blank" rel="noopener" href="https://rustwiki.org/zh-CN/std/option/enum.Option.html#method.unwrap">https://rustwiki.org/zh-CN/std/option/enum.Option.html#method.unwrap</a>	“unwrap()其他用法”</p>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="http://metaphy.top/2022/07/14/Rust%E7%BC%96%E8%AF%91%E6%88%90wasm%E6%89%A7%E8%A1%8C%E4%BA%8EJava/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Metaphy">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Metaphy's Blog">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | Metaphy's Blog">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2022/07/14/Rust%E7%BC%96%E8%AF%91%E6%88%90wasm%E6%89%A7%E8%A1%8C%E4%BA%8EJava/" class="post-title-link" itemprop="url">Rust编译成wasm执行于Java</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+      
+
+      <time title="创建时间：2022-07-14 11:24:42 / 修改时间：11:30:12" itemprop="dateCreated datePublished" datetime="2022-07-14T11:24:42+08:00">2022-07-14</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E6%8A%80%E6%9C%AF/" itemprop="url" rel="index"><span itemprop="name">技术</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <p>使用emsdk的emcc可以将c代码编译成<code>.wasm</code>文件。</p>
+<p>但是要将rust代码编译成<code>.wasm</code>文件，按照官网文档，需要使用wasm-pack进行build（安装wasm-pack时有各种问题）。</p>
+<p>但是最后生成的wasm有1900kb，也无法运行于Java（<code>wasmer-java</code>）中。</p>
+<p>最后使用<code>rustc --target wasm32-unknown-unknown -O &lt;src.rs&gt;</code>生成wasm，大小1600kb，可以于Java中运行，但是官方GitHub下载的用rust编译的示例wasm只有1kb，跟c生成wasm文件一样</p>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="http://metaphy.top/2022/07/13/Rust-%E5%8F%98%E9%87%8F%E6%89%80%E6%9C%89%E6%9D%83/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Metaphy">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Metaphy's Blog">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | Metaphy's Blog">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2022/07/13/Rust-%E5%8F%98%E9%87%8F%E6%89%80%E6%9C%89%E6%9D%83/" class="post-title-link" itemprop="url">Rust_变量所有权</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2022-07-13 10:19:45" itemprop="dateCreated datePublished" datetime="2022-07-13T10:19:45+08:00">2022-07-13</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2022-07-15 10:32:26" itemprop="dateModified" datetime="2022-07-15T10:32:26+08:00">2022-07-15</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E7%AC%94%E8%AE%B0/" itemprop="url" rel="index"><span itemprop="name">笔记</span></a>
+        </span>
+          ，
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E7%AC%94%E8%AE%B0/Rust/" itemprop="url" rel="index"><span itemprop="name">Rust</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h4 id="所有权"><a href="#所有权" class="headerlink" title="所有权"></a>所有权</h4><p>每个<strong>值</strong>都且只有一个<strong>所有者</strong>（是一个变量）。</p>
+<p>当这个变量一旦离开作用域，这个值对应的内存空间将被清除。</p>
+<h4 id="所有权的转移"><a href="#所有权的转移" class="headerlink" title="所有权的转移"></a>所有权的转移</h4><h5 id="变量间引用"><a href="#变量间引用" class="headerlink" title="变量间引用"></a>变量间引用</h5><p>所有权进行转移后，原本变量就不在拥有对这个值的引用</p>
+<figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> <span class="variable">s1</span> = String::(<span class="string">&quot;hello&quot;</span>);</span><br><span class="line"><span class="comment">//此时“hello”这个值所在内存空间的所有者是s1</span></span><br><span class="line"><span class="keyword">let</span> <span class="variable">s2</span> = s1;</span><br><span class="line"><span class="comment">//所有者转变为s2</span></span><br><span class="line"></span><br><span class="line"><span class="comment">//此时若是使用s1，则会编译错误</span></span><br><span class="line"><span class="built_in">println!</span>(<span class="string">&quot;&#123;&#125;&quot;</span>,s1);</span><br></pre></td></tr></table></figure>
+
+<p>利用克隆操作可以解决这个问题，但是会多消耗一份空间，而且两个值是独立的。</p>
+<figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> <span class="variable">s2</span> = s1.<span class="title function_ invoke__">clone</span>()</span><br></pre></td></tr></table></figure>
+
+<h5 id="将变量作为函数的参数和返回值"><a href="#将变量作为函数的参数和返回值" class="headerlink" title="将变量作为函数的参数和返回值"></a>将变量作为函数的参数和返回值</h5><figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">fn</span> <span class="title function_">main</span>()&#123;</span><br><span class="line">	<span class="keyword">let</span> <span class="variable">s1</span> = String::<span class="title function_ invoke__">from</span>(<span class="string">&quot;hello&quot;</span>);</span><br><span class="line">    <span class="comment">//“hello”所有者进入函数sout内</span></span><br><span class="line">	<span class="title function_ invoke__">sout</span>(s1);</span><br><span class="line">    <span class="comment">//此时“hello”，已经随着函数作用域的结束而清空</span></span><br><span class="line">    <span class="title function_ invoke__">println</span>(<span class="string">&quot;&#123;&#125;&quot;</span>,s1);</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">fn</span> <span class="title function_">sout</span>(string:<span class="type">String</span>)&#123;</span><br><span class="line">    <span class="title function_ invoke__">println</span>(<span class="string">&quot;&#123;&#125;&quot;</span>,string)</span><br><span class="line">    </span><br><span class="line">    <span class="comment">//string作用域结束，“hello”跟着被清空</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">fn</span> <span class="title function_">main</span>()&#123;</span><br><span class="line">	<span class="keyword">let</span> <span class="variable">s1</span> = <span class="title function_ invoke__">make</span>();</span><br><span class="line">    <span class="comment">//所有者转移出来了。</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">fn</span> <span class="title function_">make</span>()<span class="punctuation">-&gt;</span><span class="type">String</span> &#123;</span><br><span class="line">    <span class="keyword">let</span> <span class="variable">s1</span> = String::<span class="title function_ invoke__">from</span>(<span class="string">&quot;hello&quot;</span>);</span><br><span class="line">    </span><br><span class="line">    s1<span class="comment">//作为返回值被返回，“hello”所有者转移</span></span><br><span class="line">    <span class="comment">//作用域结束，但是“hello”所有者已经不是s1了，所以没有影响</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="所有权的借用"><a href="#所有权的借用" class="headerlink" title="所有权的借用"></a>所有权的借用</h4><p>由于所有权的来回移动会造成各种问题，所有可以对所有权进行借用，也就是对值引用。</p>
+<p>跟指针很像，使用 <code>&amp;</code> + <code>变量名</code> 来获得引用，不用担心所有权的转移。</p>
+<p>但是引用分为不可变引用和可变引用。</p>
+<p>不可变引用可以有很多个，类似读锁。</p>
+<p>可变引用只能有一个，类似写锁。</p>
+<p>当已有引用时，所有的可变引用都无法获取成功，并会报错。</p>
+<p>当已有引用时，对所有者变量写操作也都无法成功。</p>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="http://metaphy.top/2022/07/08/%E5%88%9B%E5%BB%BAredis%E9%9B%86%E7%BE%A4%E8%B6%85%E6%97%B6/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Metaphy">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Metaphy's Blog">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | Metaphy's Blog">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2022/07/08/%E5%88%9B%E5%BB%BAredis%E9%9B%86%E7%BE%A4%E8%B6%85%E6%97%B6/" class="post-title-link" itemprop="url">创建redis集群超时</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+      
+
+      <time title="创建时间：2022-07-08 23:28:21 / 修改时间：23:29:03" itemprop="dateCreated datePublished" datetime="2022-07-08T23:28:21+08:00">2022-07-08</time>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <p>开放Redis服务的两个TCP端口。譬如Redis客户端连接端口为6379，而Redis服务在集群中还有一个叫集群总线端口，其端口为客户端连接端口加上10000，即 6379 + 10000 &#x3D; 16379。所以开放每个集群节点的客户端端口和集群总线端口才能成功创建集群！</p>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="http://metaphy.top/2022/07/08/CentOS8%E5%AE%89%E8%A3%85Ruby%E9%94%99%E8%AF%AF/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Metaphy">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Metaphy's Blog">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | Metaphy's Blog">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2022/07/08/CentOS8%E5%AE%89%E8%A3%85Ruby%E9%94%99%E8%AF%AF/" class="post-title-link" itemprop="url">CentOS8安装Ruby错误</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+      
+
+      <time title="创建时间：2022-07-08 22:27:12 / 修改时间：22:33:20" itemprop="dateCreated datePublished" datetime="2022-07-08T22:27:12+08:00">2022-07-08</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E5%BC%82%E5%B8%B8-%E6%8A%A5%E9%94%99/" itemprop="url" rel="index"><span itemprop="name">异常/报错</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h4 id="问题"><a href="#问题" class="headerlink" title="问题"></a>问题</h4><p>安装完ruby后使用gem install时候报错：Unable to require openssl</p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2022/07/08/CentOS8%E5%AE%89%E8%A3%85Ruby%E9%94%99%E8%AF%AF/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
 
     
 
@@ -603,478 +1052,8 @@
 
 
 
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="http://metaphy.top/2022/06/19/%E8%BD%AF%E4%BB%B6%E6%B5%8B%E8%AF%95%E4%B8%8E%E8%B4%A8%E9%87%8F%E5%A4%8D%E4%B9%A0/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="Metaphy">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Metaphy's Blog">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="undefined | Metaphy's Blog">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2022/06/19/%E8%BD%AF%E4%BB%B6%E6%B5%8B%E8%AF%95%E4%B8%8E%E8%B4%A8%E9%87%8F%E5%A4%8D%E4%B9%A0/" class="post-title-link" itemprop="url">软件测试与质量复习</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">发表于</span>
-
-      <time title="创建时间：2022-06-19 12:21:00" itemprop="dateCreated datePublished" datetime="2022-06-19T12:21:00+08:00">2022-06-19</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar-check"></i>
-      </span>
-      <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2022-06-23 22:58:27" itemprop="dateModified" datetime="2022-06-23T22:58:27+08:00">2022-06-23</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">分类于</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/%E7%AC%94%E8%AE%B0/" itemprop="url" rel="index"><span itemprop="name">笔记</span></a>
-        </span>
-          ，
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/%E7%AC%94%E8%AE%B0/SCNU/" itemprop="url" rel="index"><span itemprop="name">SCNU</span></a>
-        </span>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <blockquote>
-<p>期末考试题型：<br>一、名词解释题（4 分*5&#x3D;20 分）<br>二、问答题（4 分*5&#x3D;20 分）<br>三、黑盒测试题（10 分*2&#x3D;20 分）<br>四、白盒测试题（10 分*2&#x3D;20 分）<br>五、性能测试题（10 分）<br>六、文献理解题（10 分）</p>
-</blockquote>
-<h2 id="一、软件测试理论"><a href="#一、软件测试理论" class="headerlink" title="一、软件测试理论"></a>一、软件测试理论</h2>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2022/06/19/%E8%BD%AF%E4%BB%B6%E6%B5%8B%E8%AF%95%E4%B8%8E%E8%B4%A8%E9%87%8F%E5%A4%8D%E4%B9%A0/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="http://metaphy.top/2022/06/19/VSCode%E8%BF%9C%E7%A8%8B%E8%BF%9E%E6%8E%A5%E6%9C%8D%E5%8A%A1%E5%99%A8/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="Metaphy">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Metaphy's Blog">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="undefined | Metaphy's Blog">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2022/06/19/VSCode%E8%BF%9C%E7%A8%8B%E8%BF%9E%E6%8E%A5%E6%9C%8D%E5%8A%A1%E5%99%A8/" class="post-title-link" itemprop="url">VSCode连接远程服务器</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">发表于</span>
-      
-
-      <time title="创建时间：2022-06-19 02:00:12 / 修改时间：03:29:29" itemprop="dateCreated datePublished" datetime="2022-06-19T02:00:12+08:00">2022-06-19</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">分类于</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/%E6%8A%80%E6%9C%AF/" itemprop="url" rel="index"><span itemprop="name">技术</span></a>
-        </span>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <p>由于JetBrains全家桶过于好用以及其他各种原因，我已许久没有打开过VSCode了。</p>
-<p>今天在给Nginx进行SSL证书安装部署的时候实在不想用vim改conf文件（太菜了，学艺不精），想到要是能用VSCode修改就好了，便想起在哪看见VSCode可以连接远程服务器，于是便有了这次尝试。</p>
-<h4 id="步骤"><a href="#步骤" class="headerlink" title="步骤"></a>步骤</h4><p>极其简单，先安装VSCode的插件<code>Remote - SSH</code></p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2022/06/19/VSCode%E8%BF%9C%E7%A8%8B%E8%BF%9E%E6%8E%A5%E6%9C%8D%E5%8A%A1%E5%99%A8/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="http://metaphy.top/2022/06/19/%E8%BD%AF%E4%BB%B6%E8%BF%87%E7%A8%8B%E7%AE%A1%E7%90%86%E5%A4%8D%E4%B9%A0/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="Metaphy">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Metaphy's Blog">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="undefined | Metaphy's Blog">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2022/06/19/%E8%BD%AF%E4%BB%B6%E8%BF%87%E7%A8%8B%E7%AE%A1%E7%90%86%E5%A4%8D%E4%B9%A0/" class="post-title-link" itemprop="url">软件过程管理复习笔记</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">发表于</span>
-
-      <time title="创建时间：2022-06-19 01:02:34" itemprop="dateCreated datePublished" datetime="2022-06-19T01:02:34+08:00">2022-06-19</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar-check"></i>
-      </span>
-      <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2022-06-21 20:29:41" itemprop="dateModified" datetime="2022-06-21T20:29:41+08:00">2022-06-21</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">分类于</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/%E7%AC%94%E8%AE%B0/" itemprop="url" rel="index"><span itemprop="name">笔记</span></a>
-        </span>
-          ，
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/%E7%AC%94%E8%AE%B0/SCNU/" itemprop="url" rel="index"><span itemprop="name">SCNU</span></a>
-        </span>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <p><strong>SCNU</strong>2022年《软件过程管理》课程复习笔记</p>
-<p>内容来自课本与砺儒云ppt，部分答案经过整理，有删改</p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2022/06/19/%E8%BD%AF%E4%BB%B6%E8%BF%87%E7%A8%8B%E7%AE%A1%E7%90%86%E5%A4%8D%E4%B9%A0/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="http://metaphy.top/2022/06/18/shardedJedisPool-getResource-%E5%8D%A1%E4%BD%8F-%E8%B6%85%E6%97%B6/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="Metaphy">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Metaphy's Blog">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="undefined | Metaphy's Blog">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2022/06/18/shardedJedisPool-getResource-%E5%8D%A1%E4%BD%8F-%E8%B6%85%E6%97%B6/" class="post-title-link" itemprop="url">shardedJedisPool.getResource()卡住/超时</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">发表于</span>
-      
-
-      <time title="创建时间：2022-06-18 01:31:26 / 修改时间：01:49:54" itemprop="dateCreated datePublished" datetime="2022-06-18T01:31:26+08:00">2022-06-18</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">分类于</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/%E5%BC%82%E5%B8%B8-%E6%8A%A5%E9%94%99/" itemprop="url" rel="index"><span itemprop="name">异常/报错</span></a>
-        </span>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <h3 id="问题"><a href="#问题" class="headerlink" title="问题"></a>问题</h3><p>微服务启动后正常使用，经过一段时间请求一直等待响应，经过调试排错，判断在以下代码处卡死。</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">shardedJedisPool.getResource()</span><br></pre></td></tr></table></figure>
-
-<h3 id="原因"><a href="#原因" class="headerlink" title="原因"></a>原因</h3><p>ShardedJedisPool未设置阻塞超时时间，连接建立后未关闭连接，导致连接数达到最大值，阻塞。</p>
-<blockquote>
-<p>BlockWhenExhausted：连接耗尽时是否阻塞, false报异常,ture阻塞直到超时, 默认true<br>MaxWaitMillis：获取连接时的最大等待毫秒数（如果设置为阻塞时）</p>
-</blockquote>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2022/06/18/shardedJedisPool-getResource-%E5%8D%A1%E4%BD%8F-%E8%B6%85%E6%97%B6/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="http://metaphy.top/2022/06/17/Autowired%E6%97%A0%E6%B3%95%E8%87%AA%E5%8A%A8%E8%A3%85%E9%85%8D%E6%88%96%E5%80%BC%E4%B8%BAnull/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="Metaphy">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Metaphy's Blog">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="undefined | Metaphy's Blog">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2022/06/17/Autowired%E6%97%A0%E6%B3%95%E8%87%AA%E5%8A%A8%E8%A3%85%E9%85%8D%E6%88%96%E5%80%BC%E4%B8%BAnull/" class="post-title-link" itemprop="url">Autowired无法自动装配或值为null</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">发表于</span>
-
-      <time title="创建时间：2022-06-17 03:08:52" itemprop="dateCreated datePublished" datetime="2022-06-17T03:08:52+08:00">2022-06-17</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar-check"></i>
-      </span>
-      <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2022-06-18 01:51:37" itemprop="dateModified" datetime="2022-06-18T01:51:37+08:00">2022-06-18</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">分类于</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/%E5%BC%82%E5%B8%B8-%E6%8A%A5%E9%94%99/" itemprop="url" rel="index"><span itemprop="name">异常/报错</span></a>
-        </span>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <h3 id="问题"><a href="#问题" class="headerlink" title="问题"></a>问题</h3><p>写的配置类无法在SpringBoot的ApplicationTests类中自动装配且装配为null</p>
-<h3 id="原因"><a href="#原因" class="headerlink" title="原因"></a>原因</h3><p>无法自动装配为idea报错，原因为main&#x2F;java下没有@SpringBootApplication的主类。</p>
-<p>装配为null的原因是Test类注解没写对，未启动Spring容器</p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2022/06/17/Autowired%E6%97%A0%E6%B3%95%E8%87%AA%E5%8A%A8%E8%A3%85%E9%85%8D%E6%88%96%E5%80%BC%E4%B8%BAnull/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
   <nav class="pagination">
-    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="extend next" rel="next" href="/page/2/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
+    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><a class="extend next" rel="next" href="/page/2/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
   </nav>
 
 </div>

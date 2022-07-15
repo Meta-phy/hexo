@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 6.2.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://unpkg.com/@fortawesome/fontawesome-free@6.1.1/css/all.min.css" integrity="sha256-DfWjNxDkM94fVBWx1H5BMMp0Zq7luBlV8QRcSES7s+0=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://unpkg.com/animate.css@3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"metaphy.top","root":"/","images":"/images","scheme":"Muse","darkmode":false,"version":"8.12.1","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":false,"style":null},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="Rust中的空值Rust中并没有Null值，而是None。 NoneNone位于枚举类 Option&lt;T&gt;中 1234enum Option&lt;T&gt;　&amp;#123;	Some(T),	None,&amp;#125;  对于一个变量，如果他的类型为T而不是Option&lt;T&gt;，则说明该变量不为空。 如果一个变量类型为Option&lt;T&gt;，则可能为空 获取Option&amp;">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Rust空值">
+<meta property="og:url" content="http://metaphy.top/2022/07/14/Rust%E7%A9%BA%E5%80%BC/index.html">
+<meta property="og:site_name" content="Metaphy&#39;s Blog">
+<meta property="og:description" content="Rust中的空值Rust中并没有Null值，而是None。 NoneNone位于枚举类 Option&lt;T&gt;中 1234enum Option&lt;T&gt;　&amp;#123;	Some(T),	None,&amp;#125;  对于一个变量，如果他的类型为T而不是Option&lt;T&gt;，则说明该变量不为空。 如果一个变量类型为Option&lt;T&gt;，则可能为空 获取Option&amp;">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2022-07-14T03:24:42.000Z">
+<meta property="article:modified_time" content="2022-07-15T02:49:46.501Z">
+<meta property="article:author" content="Metaphy">
+<meta property="article:tag" content="rust">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="http://metaphy.top/2022/07/14/Rust%E7%A9%BA%E5%80%BC/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"http://metaphy.top/2022/07/14/Rust%E7%A9%BA%E5%80%BC/","path":"2022/07/14/Rust空值/","title":"Rust空值"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>Rust空值 | Metaphy's Blog</title>
+  
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">Metaphy's Blog</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+
+
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#Rust%E4%B8%AD%E7%9A%84%E7%A9%BA%E5%80%BC"><span class="nav-number">1.</span> <span class="nav-text">Rust中的空值</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#None"><span class="nav-number">1.1.</span> <span class="nav-text">None</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E8%8E%B7%E5%8F%96Option-lt-T-gt-%E7%9A%84%E5%80%BC"><span class="nav-number">1.2.</span> <span class="nav-text">获取Option&lt;T&gt;的值</span></a></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">Metaphy</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">22</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">7</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">31</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+        </div>
+      </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://metaphy.top/2022/07/14/Rust%E7%A9%BA%E5%80%BC/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Metaphy">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Metaphy's Blog">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="Rust空值 | Metaphy's Blog">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Rust空值
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2022-07-14 11:24:42" itemprop="dateCreated datePublished" datetime="2022-07-14T11:24:42+08:00">2022-07-14</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2022-07-15 10:49:46" itemprop="dateModified" datetime="2022-07-15T10:49:46+08:00">2022-07-15</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E7%AC%94%E8%AE%B0/" itemprop="url" rel="index"><span itemprop="name">笔记</span></a>
+        </span>
+          ，
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E7%AC%94%E8%AE%B0/Rust/" itemprop="url" rel="index"><span itemprop="name">Rust</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <h3 id="Rust中的空值"><a href="#Rust中的空值" class="headerlink" title="Rust中的空值"></a>Rust中的空值</h3><p>Rust中并没有<code>Null</code>值，而是<code>None</code>。</p>
+<h4 id="None"><a href="#None" class="headerlink" title="None"></a>None</h4><p><code>None</code>位于枚举类 <code>Option&lt;T&gt;</code>中</p>
+<figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">enum</span> <span class="title class_">Option</span>&lt;T&gt;　&#123;</span><br><span class="line">	<span class="title function_ invoke__">Some</span>(T),</span><br><span class="line">	<span class="literal">None</span>,</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>对于一个变量，如果他的类型为<code>T</code>而不是<code>Option&lt;T&gt;</code>，则说明该变量不为空。</p>
+<p>如果一个变量类型为<code>Option&lt;T&gt;</code>，则可能为空</p>
+<h4 id="获取Option-lt-T-gt-的值"><a href="#获取Option-lt-T-gt-的值" class="headerlink" title="获取Option&lt;T&gt;的值"></a>获取Option&lt;T&gt;的值</h4><p>对于<code>Option&lt;T&gt;</code> 我们不能直接进行运算。</p>
+<figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> <span class="variable">a</span> = <span class="number">10</span>;</span><br><span class="line"><span class="keyword">let</span> <span class="variable">b</span>:<span class="type">Option</span>&lt;<span class="type">i32</span>&gt; = <span class="title function_ invoke__">Some</span>(<span class="number">20</span>);</span><br><span class="line"><span class="keyword">let</span> <span class="variable">c</span>:<span class="type">Option</span>&lt;<span class="type">i32</span>&gt; = <span class="literal">None</span>;</span><br><span class="line"><span class="comment">//此行代码会报错</span></span><br><span class="line"><span class="comment">//let res = a + b;</span></span><br><span class="line"><span class="built_in">println!</span>(<span class="string">&quot;a=&#123;&#125;,b=&#123;&#125;,c=&#123;&#125;&quot;</span>,a,b.<span class="title function_ invoke__">unwrap</span>(),c.<span class="title function_ invoke__">unwrap_or</span>(-<span class="number">1</span>));</span><br></pre></td></tr></table></figure>
+
+<p>运行结果为</p>
+<figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">a=<span class="number">10</span>,b=<span class="number">20</span>,c=-<span class="number">1</span></span><br></pre></td></tr></table></figure>
+
+
+
+<p>使用 <code>unwrap()</code> 将返回对应的<code>Some</code>值.</p>
+<p>[RustWiki]: <a target="_blank" rel="noopener" href="https://rustwiki.org/zh-CN/std/option/enum.Option.html#method.unwrap">https://rustwiki.org/zh-CN/std/option/enum.Option.html#method.unwrap</a>	“unwrap()其他用法”</p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/rust/" rel="tag"># rust</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2022/07/14/Rust%E7%BC%96%E8%AF%91%E6%88%90wasm%E6%89%A7%E8%A1%8C%E4%BA%8EJava/" rel="prev" title="Rust编译成wasm执行于Java">
+                  <i class="fa fa-chevron-left"></i> Rust编译成wasm执行于Java
+                </a>
+            </div>
+            <div class="post-nav-item">
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="beian"><a href="https://beian.miit.gov.cn/" rel="noopener" target="_blank">粤ICP备2021029314号 </a>
+      <img src="https://www.beian.gov.cn/img/new/gongan.png" alt="">
+  </div>
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Metaphy</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/muse/" rel="noopener" target="_blank">NexT.Muse</a> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <script src="https://unpkg.com/animejs@3.2.1/lib/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/schemes/muse.js"></script><script src="/js/next-boot.js"></script>
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+</body>
+</html>

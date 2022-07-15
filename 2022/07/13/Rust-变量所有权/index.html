@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 6.2.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://unpkg.com/@fortawesome/fontawesome-free@6.1.1/css/all.min.css" integrity="sha256-DfWjNxDkM94fVBWx1H5BMMp0Zq7luBlV8QRcSES7s+0=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://unpkg.com/animate.css@3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"metaphy.top","root":"/","images":"/images","scheme":"Muse","darkmode":false,"version":"8.12.1","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":false,"style":null},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="所有权每个值都且只有一个所有者（是一个变量）。 当这个变量一旦离开作用域，这个值对应的内存空间将被清除。 所有权的转移变量间引用所有权进行转移后，原本变量就不在拥有对这个值的引用 1234567let s1 &#x3D; String::(&quot;hello&quot;);&#x2F;&#x2F;此时“hello”这个值所在内存空间的所有者是s1let s2 &#x3D; s1;&#x2F;&#x2F;所有者转变为s2&#x2F;&#x2F;此时若是使用s1，则会编译错误">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Rust_变量所有权">
+<meta property="og:url" content="http://metaphy.top/2022/07/13/Rust-%E5%8F%98%E9%87%8F%E6%89%80%E6%9C%89%E6%9D%83/index.html">
+<meta property="og:site_name" content="Metaphy&#39;s Blog">
+<meta property="og:description" content="所有权每个值都且只有一个所有者（是一个变量）。 当这个变量一旦离开作用域，这个值对应的内存空间将被清除。 所有权的转移变量间引用所有权进行转移后，原本变量就不在拥有对这个值的引用 1234567let s1 &#x3D; String::(&quot;hello&quot;);&#x2F;&#x2F;此时“hello”这个值所在内存空间的所有者是s1let s2 &#x3D; s1;&#x2F;&#x2F;所有者转变为s2&#x2F;&#x2F;此时若是使用s1，则会编译错误">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2022-07-13T02:19:45.000Z">
+<meta property="article:modified_time" content="2022-07-15T02:32:26.398Z">
+<meta property="article:author" content="Metaphy">
+<meta property="article:tag" content="rust">
+<meta property="article:tag" content="所有权">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="http://metaphy.top/2022/07/13/Rust-%E5%8F%98%E9%87%8F%E6%89%80%E6%9C%89%E6%9D%83/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"http://metaphy.top/2022/07/13/Rust-%E5%8F%98%E9%87%8F%E6%89%80%E6%9C%89%E6%9D%83/","path":"2022/07/13/Rust-变量所有权/","title":"Rust_变量所有权"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>Rust_变量所有权 | Metaphy's Blog</title>
+  
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">Metaphy's Blog</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+
+
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%89%80%E6%9C%89%E6%9D%83"><span class="nav-number">1.</span> <span class="nav-text">所有权</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%89%80%E6%9C%89%E6%9D%83%E7%9A%84%E8%BD%AC%E7%A7%BB"><span class="nav-number">2.</span> <span class="nav-text">所有权的转移</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#%E5%8F%98%E9%87%8F%E9%97%B4%E5%BC%95%E7%94%A8"><span class="nav-number">2.1.</span> <span class="nav-text">变量间引用</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E5%B0%86%E5%8F%98%E9%87%8F%E4%BD%9C%E4%B8%BA%E5%87%BD%E6%95%B0%E7%9A%84%E5%8F%82%E6%95%B0%E5%92%8C%E8%BF%94%E5%9B%9E%E5%80%BC"><span class="nav-number">2.2.</span> <span class="nav-text">将变量作为函数的参数和返回值</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%89%80%E6%9C%89%E6%9D%83%E7%9A%84%E5%80%9F%E7%94%A8"><span class="nav-number">3.</span> <span class="nav-text">所有权的借用</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">Metaphy</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">22</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">7</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">31</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+        </div>
+      </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://metaphy.top/2022/07/13/Rust-%E5%8F%98%E9%87%8F%E6%89%80%E6%9C%89%E6%9D%83/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Metaphy">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Metaphy's Blog">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="Rust_变量所有权 | Metaphy's Blog">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Rust_变量所有权
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2022-07-13 10:19:45" itemprop="dateCreated datePublished" datetime="2022-07-13T10:19:45+08:00">2022-07-13</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2022-07-15 10:32:26" itemprop="dateModified" datetime="2022-07-15T10:32:26+08:00">2022-07-15</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E7%AC%94%E8%AE%B0/" itemprop="url" rel="index"><span itemprop="name">笔记</span></a>
+        </span>
+          ，
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E7%AC%94%E8%AE%B0/Rust/" itemprop="url" rel="index"><span itemprop="name">Rust</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <h4 id="所有权"><a href="#所有权" class="headerlink" title="所有权"></a>所有权</h4><p>每个<strong>值</strong>都且只有一个<strong>所有者</strong>（是一个变量）。</p>
+<p>当这个变量一旦离开作用域，这个值对应的内存空间将被清除。</p>
+<h4 id="所有权的转移"><a href="#所有权的转移" class="headerlink" title="所有权的转移"></a>所有权的转移</h4><h5 id="变量间引用"><a href="#变量间引用" class="headerlink" title="变量间引用"></a>变量间引用</h5><p>所有权进行转移后，原本变量就不在拥有对这个值的引用</p>
+<figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> <span class="variable">s1</span> = String::(<span class="string">&quot;hello&quot;</span>);</span><br><span class="line"><span class="comment">//此时“hello”这个值所在内存空间的所有者是s1</span></span><br><span class="line"><span class="keyword">let</span> <span class="variable">s2</span> = s1;</span><br><span class="line"><span class="comment">//所有者转变为s2</span></span><br><span class="line"></span><br><span class="line"><span class="comment">//此时若是使用s1，则会编译错误</span></span><br><span class="line"><span class="built_in">println!</span>(<span class="string">&quot;&#123;&#125;&quot;</span>,s1);</span><br></pre></td></tr></table></figure>
+
+<p>利用克隆操作可以解决这个问题，但是会多消耗一份空间，而且两个值是独立的。</p>
+<figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> <span class="variable">s2</span> = s1.<span class="title function_ invoke__">clone</span>()</span><br></pre></td></tr></table></figure>
+
+<h5 id="将变量作为函数的参数和返回值"><a href="#将变量作为函数的参数和返回值" class="headerlink" title="将变量作为函数的参数和返回值"></a>将变量作为函数的参数和返回值</h5><figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">fn</span> <span class="title function_">main</span>()&#123;</span><br><span class="line">	<span class="keyword">let</span> <span class="variable">s1</span> = String::<span class="title function_ invoke__">from</span>(<span class="string">&quot;hello&quot;</span>);</span><br><span class="line">    <span class="comment">//“hello”所有者进入函数sout内</span></span><br><span class="line">	<span class="title function_ invoke__">sout</span>(s1);</span><br><span class="line">    <span class="comment">//此时“hello”，已经随着函数作用域的结束而清空</span></span><br><span class="line">    <span class="title function_ invoke__">println</span>(<span class="string">&quot;&#123;&#125;&quot;</span>,s1);</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">fn</span> <span class="title function_">sout</span>(string:<span class="type">String</span>)&#123;</span><br><span class="line">    <span class="title function_ invoke__">println</span>(<span class="string">&quot;&#123;&#125;&quot;</span>,string)</span><br><span class="line">    </span><br><span class="line">    <span class="comment">//string作用域结束，“hello”跟着被清空</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">fn</span> <span class="title function_">main</span>()&#123;</span><br><span class="line">	<span class="keyword">let</span> <span class="variable">s1</span> = <span class="title function_ invoke__">make</span>();</span><br><span class="line">    <span class="comment">//所有者转移出来了。</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">fn</span> <span class="title function_">make</span>()<span class="punctuation">-&gt;</span><span class="type">String</span> &#123;</span><br><span class="line">    <span class="keyword">let</span> <span class="variable">s1</span> = String::<span class="title function_ invoke__">from</span>(<span class="string">&quot;hello&quot;</span>);</span><br><span class="line">    </span><br><span class="line">    s1<span class="comment">//作为返回值被返回，“hello”所有者转移</span></span><br><span class="line">    <span class="comment">//作用域结束，但是“hello”所有者已经不是s1了，所以没有影响</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="所有权的借用"><a href="#所有权的借用" class="headerlink" title="所有权的借用"></a>所有权的借用</h4><p>由于所有权的来回移动会造成各种问题，所有可以对所有权进行借用，也就是对值引用。</p>
+<p>跟指针很像，使用 <code>&amp;</code> + <code>变量名</code> 来获得引用，不用担心所有权的转移。</p>
+<p>但是引用分为不可变引用和可变引用。</p>
+<p>不可变引用可以有很多个，类似读锁。</p>
+<p>可变引用只能有一个，类似写锁。</p>
+<p>当已有引用时，所有的可变引用都无法获取成功，并会报错。</p>
+<p>当已有引用时，对所有者变量写操作也都无法成功。</p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/rust/" rel="tag"># rust</a>
+              <a href="/tags/%E6%89%80%E6%9C%89%E6%9D%83/" rel="tag"># 所有权</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2022/07/08/%E5%88%9B%E5%BB%BAredis%E9%9B%86%E7%BE%A4%E8%B6%85%E6%97%B6/" rel="prev" title="创建redis集群超时">
+                  <i class="fa fa-chevron-left"></i> 创建redis集群超时
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2022/07/14/Rust%E7%BC%96%E8%AF%91%E6%88%90wasm%E6%89%A7%E8%A1%8C%E4%BA%8EJava/" rel="next" title="Rust编译成wasm执行于Java">
+                  Rust编译成wasm执行于Java <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="beian"><a href="https://beian.miit.gov.cn/" rel="noopener" target="_blank">粤ICP备2021029314号 </a>
+      <img src="https://www.beian.gov.cn/img/new/gongan.png" alt="">
+  </div>
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Metaphy</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/muse/" rel="noopener" target="_blank">NexT.Muse</a> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <script src="https://unpkg.com/animejs@3.2.1/lib/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/schemes/muse.js"></script><script src="/js/next-boot.js"></script>
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+</body>
+</html>
