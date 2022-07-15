@@ -20,15 +20,15 @@
 
 <script class="next-config" data-name="main" type="application/json">{"hostname":"metaphy.top","root":"/","images":"/images","scheme":"Muse","darkmode":false,"version":"8.12.1","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":false,"style":null},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"}}</script><script src="/js/config.js"></script>
 
-    <meta name="description" content="所有权每个值都且只有一个所有者（是一个变量）。 当这个变量一旦离开作用域，这个值对应的内存空间将被清除。 所有权的转移变量间引用所有权进行转移后，原本变量就不在拥有对这个值的引用 1234567let s1 &#x3D; String::(&quot;hello&quot;);&#x2F;&#x2F;此时“hello”这个值所在内存空间的所有者是s1let s2 &#x3D; s1;&#x2F;&#x2F;所有者转变为s2&#x2F;&#x2F;此时若是使用s1，则会编译错误">
+    <meta name="description" content="所有权每个值都且只有一个所有者（是一个变量）。 当这个变量一旦离开作用域，这个值对应的内存空间将被清除。">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Rust_变量所有权">
+<meta property="og:title" content="Rust的变量所有权">
 <meta property="og:url" content="http://metaphy.top/2022/07/13/Rust-%E5%8F%98%E9%87%8F%E6%89%80%E6%9C%89%E6%9D%83/index.html">
 <meta property="og:site_name" content="Metaphy&#39;s Blog">
-<meta property="og:description" content="所有权每个值都且只有一个所有者（是一个变量）。 当这个变量一旦离开作用域，这个值对应的内存空间将被清除。 所有权的转移变量间引用所有权进行转移后，原本变量就不在拥有对这个值的引用 1234567let s1 &#x3D; String::(&quot;hello&quot;);&#x2F;&#x2F;此时“hello”这个值所在内存空间的所有者是s1let s2 &#x3D; s1;&#x2F;&#x2F;所有者转变为s2&#x2F;&#x2F;此时若是使用s1，则会编译错误">
+<meta property="og:description" content="所有权每个值都且只有一个所有者（是一个变量）。 当这个变量一旦离开作用域，这个值对应的内存空间将被清除。">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2022-07-13T02:19:45.000Z">
-<meta property="article:modified_time" content="2022-07-15T02:32:26.398Z">
+<meta property="article:modified_time" content="2022-07-15T02:52:20.116Z">
 <meta property="article:author" content="Metaphy">
 <meta property="article:tag" content="rust">
 <meta property="article:tag" content="所有权">
@@ -39,10 +39,10 @@
 
 
 
-<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"http://metaphy.top/2022/07/13/Rust-%E5%8F%98%E9%87%8F%E6%89%80%E6%9C%89%E6%9D%83/","path":"2022/07/13/Rust-变量所有权/","title":"Rust_变量所有权"}</script>
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"http://metaphy.top/2022/07/13/Rust-%E5%8F%98%E9%87%8F%E6%89%80%E6%9C%89%E6%9D%83/","path":"2022/07/13/Rust-变量所有权/","title":"Rust的变量所有权"}</script>
 
 <script class="next-config" data-name="calendar" type="application/json">""</script>
-<title>Rust_变量所有权 | Metaphy's Blog</title>
+<title>Rust的变量所有权 | Metaphy's Blog</title>
   
 
 
@@ -110,7 +110,7 @@
       <div class="sidebar-panel-container">
         <!--noindex-->
         <div class="post-toc-wrap sidebar-panel">
-            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%89%80%E6%9C%89%E6%9D%83"><span class="nav-number">1.</span> <span class="nav-text">所有权</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%89%80%E6%9C%89%E6%9D%83%E7%9A%84%E8%BD%AC%E7%A7%BB"><span class="nav-number">2.</span> <span class="nav-text">所有权的转移</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#%E5%8F%98%E9%87%8F%E9%97%B4%E5%BC%95%E7%94%A8"><span class="nav-number">2.1.</span> <span class="nav-text">变量间引用</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E5%B0%86%E5%8F%98%E9%87%8F%E4%BD%9C%E4%B8%BA%E5%87%BD%E6%95%B0%E7%9A%84%E5%8F%82%E6%95%B0%E5%92%8C%E8%BF%94%E5%9B%9E%E5%80%BC"><span class="nav-number">2.2.</span> <span class="nav-text">将变量作为函数的参数和返回值</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%89%80%E6%9C%89%E6%9D%83%E7%9A%84%E5%80%9F%E7%94%A8"><span class="nav-number">3.</span> <span class="nav-text">所有权的借用</span></a></li></ol></div>
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%89%80%E6%9C%89%E6%9D%83"><span class="nav-number">1.</span> <span class="nav-text">所有权</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%89%80%E6%9C%89%E6%9D%83%E7%9A%84%E8%BD%AC%E7%A7%BB"><span class="nav-number">1.1.</span> <span class="nav-text">所有权的转移</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#%E5%8F%98%E9%87%8F%E9%97%B4%E5%BC%95%E7%94%A8"><span class="nav-number">1.1.1.</span> <span class="nav-text">变量间引用</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E5%B0%86%E5%8F%98%E9%87%8F%E4%BD%9C%E4%B8%BA%E5%87%BD%E6%95%B0%E7%9A%84%E5%8F%82%E6%95%B0%E5%92%8C%E8%BF%94%E5%9B%9E%E5%80%BC"><span class="nav-number">1.1.2.</span> <span class="nav-text">将变量作为函数的参数和返回值</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%89%80%E6%9C%89%E6%9D%83%E7%9A%84%E5%80%9F%E7%94%A8"><span class="nav-number">1.2.</span> <span class="nav-text">所有权的借用</span></a></li></ol></li></ol></div>
         </div>
         <!--/noindex-->
 
@@ -186,12 +186,12 @@
     </span>
 
     <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="Rust_变量所有权 | Metaphy's Blog">
+      <meta itemprop="name" content="Rust的变量所有权 | Metaphy's Blog">
       <meta itemprop="description" content="">
     </span>
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
-          Rust_变量所有权
+          Rust的变量所有权
         </h1>
 
         <div class="post-meta-container">
@@ -209,7 +209,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2022-07-15 10:32:26" itemprop="dateModified" datetime="2022-07-15T10:32:26+08:00">2022-07-15</time>
+      <time title="修改时间：2022-07-15 10:52:20" itemprop="dateModified" datetime="2022-07-15T10:52:20+08:00">2022-07-15</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -235,8 +235,10 @@
     
     
     <div class="post-body" itemprop="articleBody">
-        <h4 id="所有权"><a href="#所有权" class="headerlink" title="所有权"></a>所有权</h4><p>每个<strong>值</strong>都且只有一个<strong>所有者</strong>（是一个变量）。</p>
+        <h3 id="所有权"><a href="#所有权" class="headerlink" title="所有权"></a>所有权</h3><p>每个<strong>值</strong>都且只有一个<strong>所有者</strong>（是一个变量）。</p>
 <p>当这个变量一旦离开作用域，这个值对应的内存空间将被清除。</p>
+<span id="more"></span>
+
 <h4 id="所有权的转移"><a href="#所有权的转移" class="headerlink" title="所有权的转移"></a>所有权的转移</h4><h5 id="变量间引用"><a href="#变量间引用" class="headerlink" title="变量间引用"></a>变量间引用</h5><p>所有权进行转移后，原本变量就不在拥有对这个值的引用</p>
 <figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> <span class="variable">s1</span> = String::(<span class="string">&quot;hello&quot;</span>);</span><br><span class="line"><span class="comment">//此时“hello”这个值所在内存空间的所有者是s1</span></span><br><span class="line"><span class="keyword">let</span> <span class="variable">s2</span> = s1;</span><br><span class="line"><span class="comment">//所有者转变为s2</span></span><br><span class="line"></span><br><span class="line"><span class="comment">//此时若是使用s1，则会编译错误</span></span><br><span class="line"><span class="built_in">println!</span>(<span class="string">&quot;&#123;&#125;&quot;</span>,s1);</span><br></pre></td></tr></table></figure>
 

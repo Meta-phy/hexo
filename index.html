@@ -201,7 +201,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2022-07-15 10:49:46" itemprop="dateModified" datetime="2022-07-15T10:49:46+08:00">2022-07-15</time>
+      <time title="修改时间：2022-07-15 10:51:45" itemprop="dateModified" datetime="2022-07-15T10:51:45+08:00">2022-07-15</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -228,22 +228,14 @@
     
     <div class="post-body" itemprop="articleBody">
           <h3 id="Rust中的空值"><a href="#Rust中的空值" class="headerlink" title="Rust中的空值"></a>Rust中的空值</h3><p>Rust中并没有<code>Null</code>值，而是<code>None</code>。</p>
-<h4 id="None"><a href="#None" class="headerlink" title="None"></a>None</h4><p><code>None</code>位于枚举类 <code>Option&lt;T&gt;</code>中</p>
-<figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">enum</span> <span class="title class_">Option</span>&lt;T&gt;　&#123;</span><br><span class="line">	<span class="title function_ invoke__">Some</span>(T),</span><br><span class="line">	<span class="literal">None</span>,</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>对于一个变量，如果他的类型为<code>T</code>而不是<code>Option&lt;T&gt;</code>，则说明该变量不为空。</p>
-<p>如果一个变量类型为<code>Option&lt;T&gt;</code>，则可能为空</p>
-<h4 id="获取Option-lt-T-gt-的值"><a href="#获取Option-lt-T-gt-的值" class="headerlink" title="获取Option&lt;T&gt;的值"></a>获取Option&lt;T&gt;的值</h4><p>对于<code>Option&lt;T&gt;</code> 我们不能直接进行运算。</p>
-<figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> <span class="variable">a</span> = <span class="number">10</span>;</span><br><span class="line"><span class="keyword">let</span> <span class="variable">b</span>:<span class="type">Option</span>&lt;<span class="type">i32</span>&gt; = <span class="title function_ invoke__">Some</span>(<span class="number">20</span>);</span><br><span class="line"><span class="keyword">let</span> <span class="variable">c</span>:<span class="type">Option</span>&lt;<span class="type">i32</span>&gt; = <span class="literal">None</span>;</span><br><span class="line"><span class="comment">//此行代码会报错</span></span><br><span class="line"><span class="comment">//let res = a + b;</span></span><br><span class="line"><span class="built_in">println!</span>(<span class="string">&quot;a=&#123;&#125;,b=&#123;&#125;,c=&#123;&#125;&quot;</span>,a,b.<span class="title function_ invoke__">unwrap</span>(),c.<span class="title function_ invoke__">unwrap_or</span>(-<span class="number">1</span>));</span><br></pre></td></tr></table></figure>
-
-<p>运行结果为</p>
-<figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">a=<span class="number">10</span>,b=<span class="number">20</span>,c=-<span class="number">1</span></span><br></pre></td></tr></table></figure>
-
-
-
-<p>使用 <code>unwrap()</code> 将返回对应的<code>Some</code>值.</p>
-<p>[RustWiki]: <a target="_blank" rel="noopener" href="https://rustwiki.org/zh-CN/std/option/enum.Option.html#method.unwrap">https://rustwiki.org/zh-CN/std/option/enum.Option.html#method.unwrap</a>	“unwrap()其他用法”</p>
-
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2022/07/14/Rust%E7%A9%BA%E5%80%BC/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
       
     </div>
 
@@ -297,9 +289,15 @@
         <i class="far fa-calendar"></i>
       </span>
       <span class="post-meta-item-text">发表于</span>
-      
 
-      <time title="创建时间：2022-07-14 11:24:42 / 修改时间：11:30:12" itemprop="dateCreated datePublished" datetime="2022-07-14T11:24:42+08:00">2022-07-14</time>
+      <time title="创建时间：2022-07-14 11:24:42" itemprop="dateCreated datePublished" datetime="2022-07-14T11:24:42+08:00">2022-07-14</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2022-07-15 10:53:36" itemprop="dateModified" datetime="2022-07-15T10:53:36+08:00">2022-07-15</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -322,9 +320,10 @@
     
     <div class="post-body" itemprop="articleBody">
           <p>使用emsdk的emcc可以将c代码编译成<code>.wasm</code>文件。</p>
-<p>但是要将rust代码编译成<code>.wasm</code>文件，按照官网文档，需要使用wasm-pack进行build（安装wasm-pack时有各种问题）。</p>
+<p>但是要将rust代码编译成<code>.wasm</code>文件，按照官网文档，需要使用wasm-pack进行build（安装wasm-pack时又有各种问题）。</p>
 <p>但是最后生成的wasm有1900kb，也无法运行于Java（<code>wasmer-java</code>）中。</p>
 <p>最后使用<code>rustc --target wasm32-unknown-unknown -O &lt;src.rs&gt;</code>生成wasm，大小1600kb，可以于Java中运行，但是官方GitHub下载的用rust编译的示例wasm只有1kb，跟c生成wasm文件一样</p>
+<p>补充：<code>cargo build --target wasm32-unknown-unknown</code>，也行，关键参数为<code>--target wasm32-unknown-unknown</code></p>
 
       
     </div>
@@ -369,7 +368,7 @@
     </span>
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
-          <a href="/2022/07/13/Rust-%E5%8F%98%E9%87%8F%E6%89%80%E6%9C%89%E6%9D%83/" class="post-title-link" itemprop="url">Rust_变量所有权</a>
+          <a href="/2022/07/13/Rust-%E5%8F%98%E9%87%8F%E6%89%80%E6%9C%89%E6%9D%83/" class="post-title-link" itemprop="url">Rust的变量所有权</a>
         </h2>
 
         <div class="post-meta-container">
@@ -387,7 +386,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2022-07-15 10:32:26" itemprop="dateModified" datetime="2022-07-15T10:32:26+08:00">2022-07-15</time>
+      <time title="修改时间：2022-07-15 10:52:20" itemprop="dateModified" datetime="2022-07-15T10:52:20+08:00">2022-07-15</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -413,26 +412,16 @@
     
     
     <div class="post-body" itemprop="articleBody">
-          <h4 id="所有权"><a href="#所有权" class="headerlink" title="所有权"></a>所有权</h4><p>每个<strong>值</strong>都且只有一个<strong>所有者</strong>（是一个变量）。</p>
+          <h3 id="所有权"><a href="#所有权" class="headerlink" title="所有权"></a>所有权</h3><p>每个<strong>值</strong>都且只有一个<strong>所有者</strong>（是一个变量）。</p>
 <p>当这个变量一旦离开作用域，这个值对应的内存空间将被清除。</p>
-<h4 id="所有权的转移"><a href="#所有权的转移" class="headerlink" title="所有权的转移"></a>所有权的转移</h4><h5 id="变量间引用"><a href="#变量间引用" class="headerlink" title="变量间引用"></a>变量间引用</h5><p>所有权进行转移后，原本变量就不在拥有对这个值的引用</p>
-<figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> <span class="variable">s1</span> = String::(<span class="string">&quot;hello&quot;</span>);</span><br><span class="line"><span class="comment">//此时“hello”这个值所在内存空间的所有者是s1</span></span><br><span class="line"><span class="keyword">let</span> <span class="variable">s2</span> = s1;</span><br><span class="line"><span class="comment">//所有者转变为s2</span></span><br><span class="line"></span><br><span class="line"><span class="comment">//此时若是使用s1，则会编译错误</span></span><br><span class="line"><span class="built_in">println!</span>(<span class="string">&quot;&#123;&#125;&quot;</span>,s1);</span><br></pre></td></tr></table></figure>
-
-<p>利用克隆操作可以解决这个问题，但是会多消耗一份空间，而且两个值是独立的。</p>
-<figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> <span class="variable">s2</span> = s1.<span class="title function_ invoke__">clone</span>()</span><br></pre></td></tr></table></figure>
-
-<h5 id="将变量作为函数的参数和返回值"><a href="#将变量作为函数的参数和返回值" class="headerlink" title="将变量作为函数的参数和返回值"></a>将变量作为函数的参数和返回值</h5><figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">fn</span> <span class="title function_">main</span>()&#123;</span><br><span class="line">	<span class="keyword">let</span> <span class="variable">s1</span> = String::<span class="title function_ invoke__">from</span>(<span class="string">&quot;hello&quot;</span>);</span><br><span class="line">    <span class="comment">//“hello”所有者进入函数sout内</span></span><br><span class="line">	<span class="title function_ invoke__">sout</span>(s1);</span><br><span class="line">    <span class="comment">//此时“hello”，已经随着函数作用域的结束而清空</span></span><br><span class="line">    <span class="title function_ invoke__">println</span>(<span class="string">&quot;&#123;&#125;&quot;</span>,s1);</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">fn</span> <span class="title function_">sout</span>(string:<span class="type">String</span>)&#123;</span><br><span class="line">    <span class="title function_ invoke__">println</span>(<span class="string">&quot;&#123;&#125;&quot;</span>,string)</span><br><span class="line">    </span><br><span class="line">    <span class="comment">//string作用域结束，“hello”跟着被清空</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">fn</span> <span class="title function_">main</span>()&#123;</span><br><span class="line">	<span class="keyword">let</span> <span class="variable">s1</span> = <span class="title function_ invoke__">make</span>();</span><br><span class="line">    <span class="comment">//所有者转移出来了。</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">fn</span> <span class="title function_">make</span>()<span class="punctuation">-&gt;</span><span class="type">String</span> &#123;</span><br><span class="line">    <span class="keyword">let</span> <span class="variable">s1</span> = String::<span class="title function_ invoke__">from</span>(<span class="string">&quot;hello&quot;</span>);</span><br><span class="line">    </span><br><span class="line">    s1<span class="comment">//作为返回值被返回，“hello”所有者转移</span></span><br><span class="line">    <span class="comment">//作用域结束，但是“hello”所有者已经不是s1了，所以没有影响</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<h4 id="所有权的借用"><a href="#所有权的借用" class="headerlink" title="所有权的借用"></a>所有权的借用</h4><p>由于所有权的来回移动会造成各种问题，所有可以对所有权进行借用，也就是对值引用。</p>
-<p>跟指针很像，使用 <code>&amp;</code> + <code>变量名</code> 来获得引用，不用担心所有权的转移。</p>
-<p>但是引用分为不可变引用和可变引用。</p>
-<p>不可变引用可以有很多个，类似读锁。</p>
-<p>可变引用只能有一个，类似写锁。</p>
-<p>当已有引用时，所有的可变引用都无法获取成功，并会报错。</p>
-<p>当已有引用时，对所有者变量写操作也都无法成功。</p>
-
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2022/07/13/Rust-%E5%8F%98%E9%87%8F%E6%89%80%E6%9C%89%E6%9D%83/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
       
     </div>
 
