@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 6.2.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://unpkg.com/@fortawesome/fontawesome-free@6.1.1/css/all.min.css" integrity="sha256-DfWjNxDkM94fVBWx1H5BMMp0Zq7luBlV8QRcSES7s+0=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://unpkg.com/animate.css@3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"metaphy.top","root":"/","images":"/images","scheme":"Muse","darkmode":false,"version":"8.12.1","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":false,"style":null},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="前言在wasmer-java导入函数中提到wasm操作限制较大。我们需要通过导入外部函数去解决一些问题。  截至写文章时，已用wasmer-java中他人维护的分支解决导入函数问题  问题但是导入的外部函数与wasm（实际上为rust程序）之间参数传递只能使用int， long ，float， double 四种，这是远远不够的。 解决方法对于一些复杂对象的传递，我们可以考虑使用字符串。但是字符串">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Java与wasm(rust)间字符串传参">
+<meta property="og:url" content="http://metaphy.top/2022/07/29/Java%E4%B8%8EWasm%E9%97%B4%E5%AD%97%E7%AC%A6%E4%B8%B2%E4%BC%A0%E5%8F%82/index.html">
+<meta property="og:site_name" content="Metaphy&#39;s Blog">
+<meta property="og:description" content="前言在wasmer-java导入函数中提到wasm操作限制较大。我们需要通过导入外部函数去解决一些问题。  截至写文章时，已用wasmer-java中他人维护的分支解决导入函数问题  问题但是导入的外部函数与wasm（实际上为rust程序）之间参数传递只能使用int， long ，float， double 四种，这是远远不够的。 解决方法对于一些复杂对象的传递，我们可以考虑使用字符串。但是字符串">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2022-07-29T06:15:48.000Z">
+<meta property="article:modified_time" content="2022-07-29T06:45:45.738Z">
+<meta property="article:author" content="Metaphy">
+<meta property="article:tag" content="rust">
+<meta property="article:tag" content="wasmer">
+<meta property="article:tag" content="指针">
+<meta property="article:tag" content="内存">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="http://metaphy.top/2022/07/29/Java%E4%B8%8EWasm%E9%97%B4%E5%AD%97%E7%AC%A6%E4%B8%B2%E4%BC%A0%E5%8F%82/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"http://metaphy.top/2022/07/29/Java%E4%B8%8EWasm%E9%97%B4%E5%AD%97%E7%AC%A6%E4%B8%B2%E4%BC%A0%E5%8F%82/","path":"2022/07/29/Java与Wasm间字符串传参/","title":"Java与wasm(rust)间字符串传参"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>Java与wasm(rust)间字符串传参 | Metaphy's Blog</title>
+  
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">Metaphy's Blog</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+
+
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%89%8D%E8%A8%80"><span class="nav-number">1.</span> <span class="nav-text">前言</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%97%AE%E9%A2%98"><span class="nav-number">2.</span> <span class="nav-text">问题</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%A7%A3%E5%86%B3%E6%96%B9%E6%B3%95"><span class="nav-number">3.</span> <span class="nav-text">解决方法</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%BC%A0%E5%85%A5%E5%AD%97%E7%AC%A6%E4%B8%B2"><span class="nav-number">3.1.</span> <span class="nav-text">传入字符串</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#Java"><span class="nav-number">3.1.1.</span> <span class="nav-text">Java</span></a><ol class="nav-child"><li class="nav-item nav-level-6"><a class="nav-link" href="#%E5%8F%82%E6%95%B0%E5%88%9D%E5%A7%8B%E5%8C%96"><span class="nav-number">3.1.1.1.</span> <span class="nav-text">参数初始化</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#%E5%8F%82%E6%95%B0%E4%BC%A0%E9%80%92"><span class="nav-number">3.1.1.2.</span> <span class="nav-text">参数传递</span></a></li></ol></li><li class="nav-item nav-level-5"><a class="nav-link" href="#Rust"><span class="nav-number">3.1.2.</span> <span class="nav-text">Rust</span></a><ol class="nav-child"><li class="nav-item nav-level-6"><a class="nav-link" href="#%E7%9B%B4%E6%8E%A5%E8%A7%A3%E6%9E%90"><span class="nav-number">3.1.2.1.</span> <span class="nav-text">直接解析</span></a></li></ol></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%BC%A0%E5%87%BA%E5%AD%97%E7%AC%A6%E4%B8%B2"><span class="nav-number">3.2.</span> <span class="nav-text">传出字符串</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#Rust-1"><span class="nav-number">3.2.1.</span> <span class="nav-text">Rust</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#Java-1"><span class="nav-number">3.2.2.</span> <span class="nav-text">Java</span></a></li></ol></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">Metaphy</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">25</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">7</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">35</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+        </div>
+      </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://metaphy.top/2022/07/29/Java%E4%B8%8EWasm%E9%97%B4%E5%AD%97%E7%AC%A6%E4%B8%B2%E4%BC%A0%E5%8F%82/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Metaphy">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Metaphy's Blog">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="Java与wasm(rust)间字符串传参 | Metaphy's Blog">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Java与wasm(rust)间字符串传参
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+      
+
+      <time title="创建时间：2022-07-29 14:15:48 / 修改时间：14:45:45" itemprop="dateCreated datePublished" datetime="2022-07-29T14:15:48+08:00">2022-07-29</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E6%8A%80%E6%9C%AF/" itemprop="url" rel="index"><span itemprop="name">技术</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>在<a href="/2022/07/20/wasmer-java%E5%AF%BC%E5%85%A5%E5%87%BD%E6%95%B0/" title="wasmer-java导入函数">wasmer-java导入函数</a>中提到wasm操作限制较大。我们需要通过导入外部函数去解决一些问题。</p>
+<blockquote>
+<p>截至写文章时，已用wasmer-java中他人维护的分支解决导入函数问题</p>
+</blockquote>
+<h3 id="问题"><a href="#问题" class="headerlink" title="问题"></a>问题</h3><p>但是导入的外部函数与wasm（实际上为rust程序）之间参数传递只能使用<code>int</code>， <code>long</code> ，<code>float</code>， <code>double</code> 四种，这是远远不够的。</p>
+<h3 id="解决方法"><a href="#解决方法" class="headerlink" title="解决方法"></a>解决方法</h3><p>对于一些复杂对象的传递，我们可以考虑使用字符串。但是字符串类型也是不能作为参数直接在Java与wasm中直接传递的，我们需要借助<code>wasmer-java</code>中的<code>Memory</code>类，将字符串直接写入虚拟机内存中，并传递一个 <code>int</code> 类型的指针。</p>
+<h4 id="传入字符串"><a href="#传入字符串" class="headerlink" title="传入字符串"></a>传入字符串</h4><h5 id="Java"><a href="#Java" class="headerlink" title="Java"></a>Java</h5><h6 id="参数初始化"><a href="#参数初始化" class="headerlink" title="参数初始化"></a>参数初始化</h6><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//获取memory对象</span></span><br><span class="line"><span class="type">Memory</span> <span class="variable">memory</span> <span class="operator">=</span> instance.<span class="keyword">exports</span>.getMemory(<span class="string">&quot;memory&quot;</span>);</span><br><span class="line"><span class="type">String</span> <span class="variable">str</span> <span class="operator">=</span> <span class="string">&quot;要传递的参数&quot;</span>;</span><br><span class="line"><span class="comment">//获取字符串对应的字节数组</span></span><br><span class="line"><span class="type">byte</span>[] bytes = str.getBytes(StandardCharsets.UTF_8);</span><br><span class="line"><span class="comment">//调用rust中写的申请内存区域的方法，记录这块内存地址的指针</span></span><br><span class="line"><span class="type">Integer</span> <span class="variable">strPtr</span> <span class="operator">=</span> (Integer) instance.<span class="keyword">exports</span>.getFunction(<span class="string">&quot;allocate&quot;</span>).apply(bytes.length)[<span class="number">0</span>];</span><br><span class="line"><span class="comment">//写入内存</span></span><br><span class="line"><span class="type">ByteBuffer</span> <span class="variable">mbf</span> <span class="operator">=</span> memory.buffer();</span><br><span class="line">mbf.position(strPtr);</span><br><span class="line">mbf.put(bytes);</span><br></pre></td></tr></table></figure>
+
+<h6 id="参数传递"><a href="#参数传递" class="headerlink" title="参数传递"></a>参数传递</h6><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Object[] results = instance.<span class="keyword">exports</span>.getFunction(<span class="string">&quot;函数名&quot;</span>).apply(strPtr);</span><br></pre></td></tr></table></figure>
+
+<h5 id="Rust"><a href="#Rust" class="headerlink" title="Rust"></a>Rust</h5><h6 id="直接解析"><a href="#直接解析" class="headerlink" title="直接解析"></a>直接解析</h6><p>通过<code>CStr</code>和<code>CString</code>两个库操作</p>
+<figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#[no_mangle]</span></span><br><span class="line"><span class="keyword">pub</span> <span class="keyword">extern</span> <span class="keyword">fn</span> <span class="title function_">func</span>(param_ptr: *<span class="keyword">mut</span> c_char)&#123;</span><br><span class="line">    <span class="keyword">let</span> <span class="variable">result</span>;</span><br><span class="line">    <span class="keyword">unsafe</span> &#123;</span><br><span class="line">        result = CStr::<span class="title function_ invoke__">from_ptr</span>(str_ptr).<span class="title function_ invoke__">to_str</span>().<span class="title function_ invoke__">unwrap</span>();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">let</span> <span class="variable">string</span> = CString::<span class="title function_ invoke__">new</span>(<span class="built_in">format!</span>(<span class="string">&quot;wallet:&#123;&#125;&quot;</span>, result)).<span class="title function_ invoke__">unwrap</span>();</span><br><span class="line">    <span class="comment">//其他操作</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="传出字符串"><a href="#传出字符串" class="headerlink" title="传出字符串"></a>传出字符串</h4><h5 id="Rust-1"><a href="#Rust-1" class="headerlink" title="Rust"></a>Rust</h5><p>返回 <code>*mut c_char</code> 类型即可</p>
+<figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#[no_mangle]</span></span><br><span class="line"><span class="keyword">pub</span> <span class="keyword">extern</span> <span class="keyword">fn</span> <span class="title function_">func</span>() <span class="punctuation">-&gt;</span> *<span class="keyword">mut</span> c_char&#123;</span><br><span class="line">    <span class="keyword">let</span> <span class="variable">result</span> = ...;</span><br><span class="line">	</span><br><span class="line">    <span class="keyword">let</span> <span class="variable">string</span> = CString::<span class="title function_ invoke__">new</span>(<span class="built_in">format!</span>(<span class="string">&quot;wallet:&#123;&#125;&quot;</span>, result)).<span class="title function_ invoke__">unwrap</span>();</span><br><span class="line">    </span><br><span class="line">    string.<span class="title function_ invoke__">into_raw</span>()</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h5 id="Java-1"><a href="#Java-1" class="headerlink" title="Java"></a>Java</h5><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//获取指针</span></span><br><span class="line"><span class="type">Integer</span> <span class="variable">resultPtr</span> <span class="operator">=</span> (Integer) instance.<span class="keyword">exports</span>.getFunction(<span class="string">&quot;func&quot;</span>).apply()[<span class="number">0</span>];</span><br><span class="line"><span class="comment">//获取内存</span></span><br><span class="line"><span class="type">Memory</span> <span class="variable">memory</span> <span class="operator">=</span> instance.<span class="keyword">exports</span>.getMemory(<span class="string">&quot;memory&quot;</span>);</span><br><span class="line"><span class="type">ByteBuffer</span> <span class="variable">mbf</span> <span class="operator">=</span> memory.buffer();</span><br><span class="line"><span class="comment">//解析</span></span><br><span class="line"><span class="type">String</span> <span class="variable">res</span> <span class="operator">=</span> getString(resultPtr,mbf);</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">static</span> String <span class="title function_">getString</span><span class="params">(Integer ptr, ByteBuffer mbf)</span> &#123;</span><br><span class="line">    <span class="type">StringBuilder</span> <span class="variable">sb</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">StringBuilder</span>();</span><br><span class="line">    <span class="keyword">for</span>(<span class="type">int</span> <span class="variable">i</span> <span class="operator">=</span> ptr, max = mbf.limit(); i &lt; max; i++) &#123;</span><br><span class="line">        mbf.position(i);</span><br><span class="line">        <span class="type">byte</span> <span class="variable">b</span> <span class="operator">=</span> mbf.get();</span><br><span class="line">        <span class="keyword">if</span> (b == <span class="number">0</span>) &#123;</span><br><span class="line">            <span class="keyword">break</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        sb.appendCodePoint(b);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="type">String</span> <span class="variable">result</span> <span class="operator">=</span> sb.toString();</span><br><span class="line">    <span class="keyword">return</span> result;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/rust/" rel="tag"># rust</a>
+              <a href="/tags/wasmer/" rel="tag"># wasmer</a>
+              <a href="/tags/%E6%8C%87%E9%92%88/" rel="tag"># 指针</a>
+              <a href="/tags/%E5%86%85%E5%AD%98/" rel="tag"># 内存</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2022/07/20/wasmer-java%E5%AF%BC%E5%85%A5%E5%87%BD%E6%95%B0/" rel="prev" title="wasmer-java导入函数">
+                  <i class="fa fa-chevron-left"></i> wasmer-java导入函数
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2022/07/29/hexo%E7%AB%99%E5%86%85%E8%BF%9E%E6%8E%A5/" rel="next" title="hexo站内连接">
+                  hexo站内连接 <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="beian"><a href="https://beian.miit.gov.cn/" rel="noopener" target="_blank">粤ICP备2021029314号 </a>
+      <img src="https://www.beian.gov.cn/img/new/gongan.png" alt="">
+  </div>
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Metaphy</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/muse/" rel="noopener" target="_blank">NexT.Muse</a> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <script src="https://unpkg.com/animejs@3.2.1/lib/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/schemes/muse.js"></script><script src="/js/next-boot.js"></script>
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+</body>
+</html>
