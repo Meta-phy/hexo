@@ -6,24 +6,24 @@
 <meta name="theme-color" content="#222"><meta name="generator" content="Hexo 6.2.0">
 
 
-  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
-  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
-  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
-  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+  <link rel="apple-touch-icon" sizes="180x180" href="/hexo/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/hexo/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/hexo/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/hexo/images/logo.svg" color="#222">
 
-<link rel="stylesheet" href="/css/main.css">
+<link rel="stylesheet" href="/hexo/css/main.css">
 
 
 
 <link rel="stylesheet" href="https://unpkg.com/@fortawesome/fontawesome-free@6.1.1/css/all.min.css" integrity="sha256-DfWjNxDkM94fVBWx1H5BMMp0Zq7luBlV8QRcSES7s+0=" crossorigin="anonymous">
   <link rel="stylesheet" href="https://unpkg.com/animate.css@3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
 
-<script class="next-config" data-name="main" type="application/json">{"hostname":"metaphy.top","root":"/","images":"/images","scheme":"Muse","darkmode":false,"version":"8.12.1","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":false,"style":null},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"}}</script><script src="/js/config.js"></script>
+<script class="next-config" data-name="main" type="application/json">{"hostname":"meta-phy.github.io","root":"/hexo/","images":"/hexo/images","scheme":"Muse","darkmode":false,"version":"8.12.1","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":false,"style":null},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"}}</script><script src="/hexo/js/config.js"></script>
 
     <meta name="description" content="前言在wasmer-java导入函数中提到wasm操作限制较大。我们需要通过导入外部函数去解决一些问题。  截至写文章时，已用wasmer-java中他人维护的分支解决导入函数问题  问题但是导入的外部函数与wasm（实际上为rust程序）之间参数传递只能使用int， long ，float， double 四种，这是远远不够的。 解决方法对于一些复杂对象的传递，我们可以考虑使用字符串。但是字符串">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Java与wasm(rust)间字符串传参">
-<meta property="og:url" content="http://metaphy.top/2022/07/29/Java%E4%B8%8EWasm%E9%97%B4%E5%AD%97%E7%AC%A6%E4%B8%B2%E4%BC%A0%E5%8F%82/index.html">
+<meta property="og:url" content="https://meta-phy.github.io/hexo/2022/07/29/Java%E4%B8%8EWasm%E9%97%B4%E5%AD%97%E7%AC%A6%E4%B8%B2%E4%BC%A0%E5%8F%82/index.html">
 <meta property="og:site_name" content="个人学习笔记">
 <meta property="og:description" content="前言在wasmer-java导入函数中提到wasm操作限制较大。我们需要通过导入外部函数去解决一些问题。  截至写文章时，已用wasmer-java中他人维护的分支解决导入函数问题  问题但是导入的外部函数与wasm（实际上为rust程序）之间参数传递只能使用int， long ，float， double 四种，这是远远不够的。 解决方法对于一些复杂对象的传递，我们可以考虑使用字符串。但是字符串">
 <meta property="og:locale" content="zh_CN">
@@ -37,11 +37,11 @@
 <meta name="twitter:card" content="summary">
 
 
-<link rel="canonical" href="http://metaphy.top/2022/07/29/Java%E4%B8%8EWasm%E9%97%B4%E5%AD%97%E7%AC%A6%E4%B8%B2%E4%BC%A0%E5%8F%82/">
+<link rel="canonical" href="https://meta-phy.github.io/hexo/2022/07/29/Java%E4%B8%8EWasm%E9%97%B4%E5%AD%97%E7%AC%A6%E4%B8%B2%E4%BC%A0%E5%8F%82/">
 
 
 
-<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"http://metaphy.top/2022/07/29/Java%E4%B8%8EWasm%E9%97%B4%E5%AD%97%E7%AC%A6%E4%B8%B2%E4%BC%A0%E5%8F%82/","path":"2022/07/29/Java与Wasm间字符串传参/","title":"Java与wasm(rust)间字符串传参"}</script>
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://meta-phy.github.io/hexo/2022/07/29/Java%E4%B8%8EWasm%E9%97%B4%E5%AD%97%E7%AC%A6%E4%B8%B2%E4%BC%A0%E5%8F%82/","path":"2022/07/29/Java与Wasm间字符串传参/","title":"Java与wasm(rust)间字符串传参"}</script>
 
 <script class="next-config" data-name="calendar" type="application/json">""</script>
 <title>Java与wasm(rust)间字符串传参 | 个人学习笔记</title>
@@ -52,7 +52,7 @@
 
 
   <noscript>
-    <link rel="stylesheet" href="/css/noscript.css">
+    <link rel="stylesheet" href="/hexo/css/noscript.css">
   </noscript>
 </head>
 
@@ -69,7 +69,7 @@
 
   <div class="site-meta">
 
-    <a href="/" class="brand" rel="start">
+    <a href="/hexo/" class="brand" rel="start">
       <i class="logo-line"></i>
       <p class="site-title">个人学习笔记</p>
       <i class="logo-line"></i>
@@ -124,18 +124,18 @@
 <div class="site-state-wrap site-overview-item animated">
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
-        <a href="/archives/">
+        <a href="/hexo/archives/">
           <span class="site-state-item-count">28</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
-          <a href="/categories/">
+          <a href="/hexo/categories/">
         <span class="site-state-item-count">7</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">
-          <a href="/tags/">
+          <a href="/hexo/tags/">
         <span class="site-state-item-count">38</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
@@ -175,10 +175,10 @@
   
 
   <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://metaphy.top/2022/07/29/Java%E4%B8%8EWasm%E9%97%B4%E5%AD%97%E7%AC%A6%E4%B8%B2%E4%BC%A0%E5%8F%82/">
+    <link itemprop="mainEntityOfPage" href="https://meta-phy.github.io/hexo/2022/07/29/Java%E4%B8%8EWasm%E9%97%B4%E5%AD%97%E7%AC%A6%E4%B8%B2%E4%BC%A0%E5%8F%82/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="image" content="/hexo/images/avatar.gif">
       <meta itemprop="name" content="Metaphy">
     </span>
 
@@ -213,7 +213,7 @@
       </span>
       <span class="post-meta-item-text">分类于</span>
         <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/%E6%8A%80%E6%9C%AF/" itemprop="url" rel="index"><span itemprop="name">技术</span></a>
+          <a href="/hexo/categories/%E6%8A%80%E6%9C%AF/" itemprop="url" rel="index"><span itemprop="name">技术</span></a>
         </span>
     </span>
 
@@ -256,22 +256,22 @@
 
     <footer class="post-footer">
           <div class="post-tags">
-              <a href="/tags/rust/" rel="tag"># rust</a>
-              <a href="/tags/wasmer/" rel="tag"># wasmer</a>
-              <a href="/tags/%E6%8C%87%E9%92%88/" rel="tag"># 指针</a>
-              <a href="/tags/%E5%86%85%E5%AD%98/" rel="tag"># 内存</a>
+              <a href="/hexo/tags/rust/" rel="tag"># rust</a>
+              <a href="/hexo/tags/wasmer/" rel="tag"># wasmer</a>
+              <a href="/hexo/tags/%E6%8C%87%E9%92%88/" rel="tag"># 指针</a>
+              <a href="/hexo/tags/%E5%86%85%E5%AD%98/" rel="tag"># 内存</a>
           </div>
 
         
 
           <div class="post-nav">
             <div class="post-nav-item">
-                <a href="/2022/07/20/wasmer-java%E5%AF%BC%E5%85%A5%E5%87%BD%E6%95%B0/" rel="prev" title="wasmer-java导入函数">
+                <a href="/hexo/2022/07/20/wasmer-java%E5%AF%BC%E5%85%A5%E5%87%BD%E6%95%B0/" rel="prev" title="wasmer-java导入函数">
                   <i class="fa fa-chevron-left"></i> wasmer-java导入函数
                 </a>
             </div>
             <div class="post-nav-item">
-                <a href="/2022/07/29/hexo%E7%AB%99%E5%86%85%E8%BF%9E%E6%8E%A5/" rel="next" title="hexo站内连接">
+                <a href="/hexo/2022/07/29/hexo%E7%AB%99%E5%86%85%E8%BF%9E%E6%8E%A5/" rel="next" title="hexo站内连接">
                   hexo站内连接 <i class="fa fa-chevron-right"></i>
                 </a>
             </div>
@@ -297,7 +297,7 @@
 
 <div class="copyright">
   &copy; 
-  <span itemprop="copyrightYear">2022</span>
+  <span itemprop="copyrightYear">2023</span>
   <span class="with-love">
     <i class="fa fa-heart"></i>
   </span>
@@ -311,7 +311,7 @@
 
   
   <script src="https://unpkg.com/animejs@3.2.1/lib/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
-<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/schemes/muse.js"></script><script src="/js/next-boot.js"></script>
+<script src="/hexo/js/comments.js"></script><script src="/hexo/js/utils.js"></script><script src="/hexo/js/motion.js"></script><script src="/hexo/js/schemes/muse.js"></script><script src="/hexo/js/next-boot.js"></script>
 
   
 

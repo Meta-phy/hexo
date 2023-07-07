@@ -6,24 +6,24 @@
 <meta name="theme-color" content="#222"><meta name="generator" content="Hexo 6.2.0">
 
 
-  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
-  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
-  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
-  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+  <link rel="apple-touch-icon" sizes="180x180" href="/hexo/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/hexo/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/hexo/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/hexo/images/logo.svg" color="#222">
 
-<link rel="stylesheet" href="/css/main.css">
+<link rel="stylesheet" href="/hexo/css/main.css">
 
 
 
 <link rel="stylesheet" href="https://unpkg.com/@fortawesome/fontawesome-free@6.1.1/css/all.min.css" integrity="sha256-DfWjNxDkM94fVBWx1H5BMMp0Zq7luBlV8QRcSES7s+0=" crossorigin="anonymous">
   <link rel="stylesheet" href="https://unpkg.com/animate.css@3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
 
-<script class="next-config" data-name="main" type="application/json">{"hostname":"metaphy.top","root":"/","images":"/images","scheme":"Muse","darkmode":false,"version":"8.12.1","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":false,"style":null},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"}}</script><script src="/js/config.js"></script>
+<script class="next-config" data-name="main" type="application/json">{"hostname":"meta-phy.github.io","root":"/hexo/","images":"/hexo/images","scheme":"Muse","darkmode":false,"version":"8.12.1","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":false,"style":null},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"}}</script><script src="/hexo/js/config.js"></script>
 
     <meta name="description" content="开放Redis服务的两个TCP端口。譬如Redis客户端连接端口为6379，而Redis服务在集群中还有一个叫集群总线端口，其端口为客户端连接端口加上10000，即 6379 + 10000 &#x3D; 16379。所以开放每个集群节点的客户端端口和集群总线端口才能成功创建集群！">
 <meta property="og:type" content="article">
 <meta property="og:title" content="创建redis集群超时">
-<meta property="og:url" content="http://metaphy.top/2022/07/08/%E5%88%9B%E5%BB%BAredis%E9%9B%86%E7%BE%A4%E8%B6%85%E6%97%B6/index.html">
+<meta property="og:url" content="https://meta-phy.github.io/hexo/2022/07/08/%E5%88%9B%E5%BB%BAredis%E9%9B%86%E7%BE%A4%E8%B6%85%E6%97%B6/index.html">
 <meta property="og:site_name" content="个人学习笔记">
 <meta property="og:description" content="开放Redis服务的两个TCP端口。譬如Redis客户端连接端口为6379，而Redis服务在集群中还有一个叫集群总线端口，其端口为客户端连接端口加上10000，即 6379 + 10000 &#x3D; 16379。所以开放每个集群节点的客户端端口和集群总线端口才能成功创建集群！">
 <meta property="og:locale" content="zh_CN">
@@ -35,11 +35,11 @@
 <meta name="twitter:card" content="summary">
 
 
-<link rel="canonical" href="http://metaphy.top/2022/07/08/%E5%88%9B%E5%BB%BAredis%E9%9B%86%E7%BE%A4%E8%B6%85%E6%97%B6/">
+<link rel="canonical" href="https://meta-phy.github.io/hexo/2022/07/08/%E5%88%9B%E5%BB%BAredis%E9%9B%86%E7%BE%A4%E8%B6%85%E6%97%B6/">
 
 
 
-<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"http://metaphy.top/2022/07/08/%E5%88%9B%E5%BB%BAredis%E9%9B%86%E7%BE%A4%E8%B6%85%E6%97%B6/","path":"2022/07/08/创建redis集群超时/","title":"创建redis集群超时"}</script>
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://meta-phy.github.io/hexo/2022/07/08/%E5%88%9B%E5%BB%BAredis%E9%9B%86%E7%BE%A4%E8%B6%85%E6%97%B6/","path":"2022/07/08/创建redis集群超时/","title":"创建redis集群超时"}</script>
 
 <script class="next-config" data-name="calendar" type="application/json">""</script>
 <title>创建redis集群超时 | 个人学习笔记</title>
@@ -50,7 +50,7 @@
 
 
   <noscript>
-    <link rel="stylesheet" href="/css/noscript.css">
+    <link rel="stylesheet" href="/hexo/css/noscript.css">
   </noscript>
 </head>
 
@@ -67,7 +67,7 @@
 
   <div class="site-meta">
 
-    <a href="/" class="brand" rel="start">
+    <a href="/hexo/" class="brand" rel="start">
       <i class="logo-line"></i>
       <p class="site-title">个人学习笔记</p>
       <i class="logo-line"></i>
@@ -121,18 +121,18 @@
 <div class="site-state-wrap site-overview-item animated">
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
-        <a href="/archives/">
+        <a href="/hexo/archives/">
           <span class="site-state-item-count">28</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
-          <a href="/categories/">
+          <a href="/hexo/categories/">
         <span class="site-state-item-count">7</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">
-          <a href="/tags/">
+          <a href="/hexo/tags/">
         <span class="site-state-item-count">38</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
@@ -172,10 +172,10 @@
   
 
   <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://metaphy.top/2022/07/08/%E5%88%9B%E5%BB%BAredis%E9%9B%86%E7%BE%A4%E8%B6%85%E6%97%B6/">
+    <link itemprop="mainEntityOfPage" href="https://meta-phy.github.io/hexo/2022/07/08/%E5%88%9B%E5%BB%BAredis%E9%9B%86%E7%BE%A4%E8%B6%85%E6%97%B6/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="image" content="/hexo/images/avatar.gif">
       <meta itemprop="name" content="Metaphy">
     </span>
 
@@ -216,7 +216,7 @@
       </span>
       <span class="post-meta-item-text">分类于</span>
         <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/%E5%BC%82%E5%B8%B8-%E6%8A%A5%E9%94%99/" itemprop="url" rel="index"><span itemprop="name">异常/报错</span></a>
+          <a href="/hexo/categories/%E5%BC%82%E5%B8%B8-%E6%8A%A5%E9%94%99/" itemprop="url" rel="index"><span itemprop="name">异常/报错</span></a>
         </span>
     </span>
 
@@ -240,20 +240,20 @@
 
     <footer class="post-footer">
           <div class="post-tags">
-              <a href="/tags/Linux/" rel="tag"># Linux</a>
-              <a href="/tags/redis/" rel="tag"># redis</a>
+              <a href="/hexo/tags/Linux/" rel="tag"># Linux</a>
+              <a href="/hexo/tags/redis/" rel="tag"># redis</a>
           </div>
 
         
 
           <div class="post-nav">
             <div class="post-nav-item">
-                <a href="/2022/07/08/CentOS8%E5%AE%89%E8%A3%85Ruby%E9%94%99%E8%AF%AF/" rel="prev" title="CentOS8安装Ruby错误">
+                <a href="/hexo/2022/07/08/CentOS8%E5%AE%89%E8%A3%85Ruby%E9%94%99%E8%AF%AF/" rel="prev" title="CentOS8安装Ruby错误">
                   <i class="fa fa-chevron-left"></i> CentOS8安装Ruby错误
                 </a>
             </div>
             <div class="post-nav-item">
-                <a href="/2022/07/13/Rust-%E5%8F%98%E9%87%8F%E6%89%80%E6%9C%89%E6%9D%83/" rel="next" title="Rust的变量所有权">
+                <a href="/hexo/2022/07/13/Rust-%E5%8F%98%E9%87%8F%E6%89%80%E6%9C%89%E6%9D%83/" rel="next" title="Rust的变量所有权">
                   Rust的变量所有权 <i class="fa fa-chevron-right"></i>
                 </a>
             </div>
@@ -279,7 +279,7 @@
 
 <div class="copyright">
   &copy; 
-  <span itemprop="copyrightYear">2022</span>
+  <span itemprop="copyrightYear">2023</span>
   <span class="with-love">
     <i class="fa fa-heart"></i>
   </span>
@@ -293,7 +293,7 @@
 
   
   <script src="https://unpkg.com/animejs@3.2.1/lib/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
-<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/schemes/muse.js"></script><script src="/js/next-boot.js"></script>
+<script src="/hexo/js/comments.js"></script><script src="/hexo/js/utils.js"></script><script src="/hexo/js/motion.js"></script><script src="/hexo/js/schemes/muse.js"></script><script src="/hexo/js/next-boot.js"></script>
 
   
 
